@@ -1,6 +1,6 @@
 // Project INF402
 
-function giveAllSquaresOnTheSameLineOrColumn (literal) {
+function giveAllSquaresOnTheSameLineOrColumn(literal) {
     let square = literal[0];
     let value = literal[1];
     let result = [];
@@ -45,7 +45,7 @@ function giveAllSquaresOnTheSameLineOrColumn (literal) {
 }
 
 
-function searchIndexInList (list, element) {
+function searchIndexInList(list, element) {
     let result = -1;
     for (let i=0; i<list.length; i++) {
         if (list[i] === element) {
@@ -56,7 +56,7 @@ function searchIndexInList (list, element) {
 }
 
 
-function literal2int (literal) {
+function literal2int(literal) {
     let square = literal[0];
     let value = literal[1];
 
@@ -67,8 +67,17 @@ function literal2int (literal) {
     return 4*A+B;
 }
 
+function int2literal(value) {
+    const squares = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P'];
+    let letterIndex = 0;
+    while(value>4) {
+        value-=4;
+        letterIndex++;
+    }
+    return squares[letterIndex] + value;
+}
 
-function generateFNC () {
+function generateFNC() {
     let result = [];
     for (let square of ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P']) {
         result.push(literal2int(square+'1') + ' ' + literal2int(square+'2') + ' ' + literal2int(square+'3') + ' ' + literal2int(square+'4') + ' 0');
@@ -85,7 +94,7 @@ function generateFNC () {
 }
 
 
-function addRule (list, rule) {
+function addRule(list, rule) {
     let result = 0;
     if (rule.length === 2) {
         list.push(literal2int(rule) + ' 0');
@@ -113,7 +122,7 @@ function addRule (list, rule) {
 }
 
 
-function rpl2dimacs (rpl) {
+function rpl2dimacs(rpl) {
     let dimacs = generateFNC();
     let numberOfClauses = 576; // Initial number of clauses
 
@@ -125,3 +134,19 @@ function rpl2dimacs (rpl) {
     return dimacs;
 }
 
+
+function dimacs2pretty(dimacs) {
+    let result = [];
+    let isSat = dimacs[17]==='U';
+
+    if (isSat) {
+        let variables = dimacs.slice(20).split(' ');
+        for (let variable in variables) {
+            if (variable[0]!='-') {
+                result.push(int2literal(variable));
+            }
+        }
+    }
+
+    return result;
+}
