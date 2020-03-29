@@ -159,13 +159,20 @@ function dimacs2pretty(dimacs) {
 
     if (isSat) {
         const variables = dimacs.slice(4).split(' ');
-        for (let rowNumber=0; rowNumber<4; ++rowNumber) {
 
-        }
+        const literals = [];
         for (const variable of variables) {
             if (variable[0]!='-') {
-                result.push(int2literal(variable));
+                literals.push(int2literal(variable));
             }
+        }
+
+        for (let row=0; row<4; ++row) {
+            const line = [];
+            for (let col=0; col<4; ++col) {
+                line.push(literals[4*row+col][1]);
+            }
+            result.push(line);
         }
     }
 

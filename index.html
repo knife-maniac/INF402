@@ -14,9 +14,11 @@
                 const rpl = $textarea.val().split('\n');
                 const dimacs = rpl2dimacs(rpl);
                 const solution_as_dimacs = solve(dimacs);
-                const pretty_solution = dimacs2pretty(solution_as_dimacs);
+                const solution_as_array = dimacs2pretty(solution_as_dimacs);
                 const $body = jQuery('body');
-                $body.append(pretty_solution);
+                const $table=jQuery('<table>');
+                $table.append(solution_as_array.map(r=>'<tr>'+(r.map(c=>`<td style="margin: 5px; padding:10px; border:1px solid blue;">${c}</td>`))+'</tr>'))
+                $body.append($table);
             });
         });
     </script>
