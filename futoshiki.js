@@ -56,7 +56,7 @@ function searchIndexInList (list, element) {
 }
 
 
-function literalToInt (literal) {
+function literal2int (literal) {
     let square = literal[0];
     let value = literal[1];
 
@@ -71,13 +71,13 @@ function literalToInt (literal) {
 function generateFNC () {
     let result = [];
     for (let square of ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P']) {
-        result.push(literalToInt(square+'1') + ' ' + literalToInt(square+'2') + ' ' + literalToInt(square+'3') + ' ' + literalToInt(square+'4') + ' 0');
+        result.push(literal2int(square+'1') + ' ' + literal2int(square+'2') + ' ' + literal2int(square+'3') + ' ' + literal2int(square+'4') + ' 0');
 
         for (let value of ['1','2','3','4']) {
             let literal1 = square + value;
 
             for (let literal2 of giveAllSquaresOnTheSameLineOrColumn(literal1)) {
-                result.push('-' + literalToInt(literal1) + ' -' + literalToInt(literal2) + ' 0');
+                result.push('-' + literal2int(literal1) + ' -' + literal2int(literal2) + ' 0');
             }
         }
     }
@@ -88,7 +88,7 @@ function generateFNC () {
 function addRule (list, rule) {
     let result = 0;
     if (rule.length === 2) {
-        list.push(literalToInt(rule) + ' 0');
+        list.push(literal2int(rule) + ' 0');
         result = 1;
     } else if (rule.length === 3 || rule.length === 5) {
         let square1, square2;
@@ -100,12 +100,12 @@ function addRule (list, rule) {
             square2 = rule[0];
         }
 
-        list.push('-' + literalToInt(square1 + '2') + ' ' + literalToInt(square2 + '3') + ' ' + literalToInt(square2 + '4') + ' 0');
-        list.push('-' + literalToInt(square1 + '3') + ' ' + literalToInt(square2 + '4') + ' 0');
-        list.push('-' + literalToInt(square1 + '4') + ' 0');
-        list.push('-' + literalToInt(square2 + '3') + ' ' + literalToInt(square1 + '1') + ' ' + literalToInt(square1 + '2') + ' 0');
-        list.push('-' + literalToInt(square2 + '2') + ' ' + literalToInt(square1 + '1') + ' 0');
-        list.push('-' + literalToInt(square2 + '1') + ' 0');
+        list.push('-' + literal2int(square1 + '2') + ' ' + literal2int(square2 + '3') + ' ' + literal2int(square2 + '4') + ' 0');
+        list.push('-' + literal2int(square1 + '3') + ' ' + literal2int(square2 + '4') + ' 0');
+        list.push('-' + literal2int(square1 + '4') + ' 0');
+        list.push('-' + literal2int(square2 + '3') + ' ' + literal2int(square1 + '1') + ' ' + literal2int(square1 + '2') + ' 0');
+        list.push('-' + literal2int(square2 + '2') + ' ' + literal2int(square1 + '1') + ' 0');
+        list.push('-' + literal2int(square2 + '1') + ' 0');
         result = 6;
     }
 
@@ -113,44 +113,15 @@ function addRule (list, rule) {
 }
 
 
-function main () {
-    let DIMACS = generateFNC();
+function rpl2dimacs (rpl) {
+    let dimacs = generateFNC();
     let numberOfClauses = 576; // Initial number of clauses
 
-    console.log('Grid :\n  A B C D\n  E F G H\n  I J K L\n  M N O P\n');
-    console.log('Enter the known information :');
-    console.log('  - A1 : A contain the value 1');
-    console.log('  - G<H : The value of G is strictly lower than the one of H');
-    console.log('  - "done" to finish');
-
-    /*
-    let rule = prompt();
-
-    while (rule!='done') {
-        numberOfClauses += addRule(DIMACS,rule);
-        rule = prompt();
+    for (let rule of rpl) {
+        numberOfClauses += addRule(dimacs,rule);
     }
-    */
-    numberOfClauses += addRule(DIMACS,'F2');
-    numberOfClauses += addRule(DIMACS,'P3');
-    numberOfClauses += addRule(DIMACS,'A > B');
-    numberOfClauses += addRule(DIMACS,'K < L');
-    numberOfClauses += addRule(DIMACS,'J > N');
+    dimacs.splice(0,0,'p cnf 64 ' + numberOfClauses + '<br>');
 
-
-    //let file = open("FNC.txt","w");
-    //file.write("p cnf 64 %s\n" %(numberOfClauses));
-    console.log('p cnf 64 ' + numberOfClauses);
-    for (let line of DIMACS) {
-    //    file.write(line);
-    //    file.close();
-        console.log(line);
-    }
-    console.log('The conjunctive normal form  associated to this grid has been written in the file "FNC.txt"');
-
-
+    return dimacs;
 }
 
-
-
-main();
