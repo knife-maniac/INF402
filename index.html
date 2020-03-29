@@ -4,16 +4,31 @@
     <meta charset="UTF-8">
     <title>INF402 - Futoshiki</title>
     <script type="application/javascript" src="lib/jquery-3.4.1.js"></script>
+    <script type="application/javascript" src="lib/minisat.js"></script>
     <script type="application/javascript" src="futoshiki.js"></script>
     <script type="application/javascript">
-        $(function(){
-            let $body = $('body');
-            $body.append('<h2>Hello</h2>');
+        jQuery(function(){
 
+            jQuery('button').click(function() {
+                const $textarea = jQuery('textarea');
+                const rpl = $textarea.val().split('\n');
+                const dimacs = rpl2dimacs(rpl);
+                const solution_as_dimacs = solve(dimacs);
+                const pretty_solution = dimacs2pretty(solution_as_dimacs);
+                const $body = jQuery('body');
+                $body.append(pretty_solution);
+            });
         });
     </script>
 </head>
 <body>
-
+<h2>Futoshiki</h2>
+<textarea name="input" rows="5">F2
+P3
+A>B
+K&lt;L
+J&gt;N</textarea>
+<button>RUN</button>
+<hr>
 </body>
 </html>

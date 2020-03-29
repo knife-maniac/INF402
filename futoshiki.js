@@ -1,10 +1,38 @@
 // Project INF402
 
+function solve(problem_as_dimacs) {
+    var solve_string = Module.cwrap('solve_string', 'string', ['string', 'int']);
+    var oldPrint = Module.print;
+    var oldPrintErr = Module.printErr;
+    let result='';
+    Module['print'] = function(x) {
+        result+='***:'+x;
+        alert(x);
+    }
+    Module['printErr'] = function(err) {
+        result+='ERR:'+err;
+        alert(err);
+    }
+    try {
+        //var startTime = (new Date()).getTime();
+        result += solve_string(problem_as_dimacs, problem_as_dimacs.length);
+        //var endTime = (new Date()).getTime();
+        //outputElem.value += 'CPU time: ' + ((endTime - startTime) / 1000) + 's\n';
+    } catch(e) {
+        Module.printErr('Error: ' + e);
+    }
+    Module.print = oldPrint;
+    Module.printErr = oldPrintErr;
+
+    return result;
+}
+
+
 function giveAllSquaresOnTheSameLineOrColumn(literal) {
     let square = literal[0];
     let value = literal[1];
     let result = [];
-    for (let i=1; i<=4; i++) {
+    for (let i=1; i<=4; ++i) {
         if (i!=value) {
             result.push(square+i);
         }
@@ -45,22 +73,11 @@ function giveAllSquaresOnTheSameLineOrColumn(literal) {
 }
 
 
-function searchIndexInList(list, element) {
-    let result = -1;
-    for (let i=0; i<list.length; i++) {
-        if (list[i] === element) {
-            result = i;
-        }
-    }
-    return result;
-}
-
-
 function literal2int(literal) {
     let square = literal[0];
     let value = literal[1];
 
-    let A = searchIndexInList(['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P'],square);
+    let A = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P'].indexOf(square);
     console.log(square + ' : ' + A);
     let B = parseInt(value);
 
@@ -72,12 +89,13 @@ function int2literal(value) {
     let letterIndex = 0;
     while(value>4) {
         value-=4;
-        letterIndex++;
+        ++letterIndex;
     }
     return squares[letterIndex] + value;
 }
 
-function generateFNC() {
+
+function generateCNF() {
     let result = [];
     for (let square of ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P']) {
         result.push(literal2int(square+'1') + ' ' + literal2int(square+'2') + ' ' + literal2int(square+'3') + ' ' + literal2int(square+'4') + ' 0');
@@ -123,25 +141,28 @@ function addRule(list, rule) {
 
 
 function rpl2dimacs(rpl) {
-    let dimacs = generateFNC();
+    let dimacs = generateCNF();
     let numberOfClauses = 576; // Initial number of clauses
 
     for (let rule of rpl) {
         numberOfClauses += addRule(dimacs,rule);
     }
-    dimacs.splice(0,0,'p cnf 64 ' + numberOfClauses + '<br>');
+    dimacs.splice(0,0,'p cnf 64 ' + numberOfClauses);
 
-    return dimacs;
+    return dimacs.join('\n');
 }
 
 
 function dimacs2pretty(dimacs) {
-    let result = [];
-    let isSat = dimacs[17]==='U';
+    const result = [];
+    const isSat = dimacs[0]==='S';
 
     if (isSat) {
-        let variables = dimacs.slice(20).split(' ');
-        for (let variable in variables) {
+        const variables = dimacs.slice(4).split(' ');
+        for (let rowNumber=0; rowNumber<4; ++rowNumber) {
+
+        }
+        for (const variable of variables) {
             if (variable[0]!='-') {
                 result.push(int2literal(variable));
             }
