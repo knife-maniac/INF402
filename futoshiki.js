@@ -78,7 +78,6 @@ function literal2int(literal) {
     let value = literal[1];
 
     let A = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P'].indexOf(square);
-    console.log(square + ' : ' + A);
     let B = parseInt(value);
 
     return 4*A+B;

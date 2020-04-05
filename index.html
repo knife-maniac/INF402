@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>INF402 - Futoshiki</title>
+    <link rel="stylesheet" href="style.css"/>
+
     <script type="application/javascript" src="lib/jquery-3.4.1.js"></script>
     <script type="application/javascript" src="lib/minisat.js"></script>
     <script type="application/javascript" src="futoshiki.js"></script>
@@ -17,7 +19,7 @@
                 const solution_as_array = dimacs2pretty(solution_as_dimacs);
                 const $body = jQuery('body');
                 const $table=jQuery('<table>');
-                $table.append(solution_as_array.map(r=>'<tr>'+(r.map(c=>`<td style="margin: 5px; padding:10px; border:1px solid blue;">${c}</td>`))+'</tr>'))
+                $table.append(solution_as_array.map(r=>'<tr>'+(r.map(c=>`<td>${c}</td>`))+'</tr>'))
                 $body.append($table);
             });
         });
@@ -25,6 +27,74 @@
 </head>
 <body>
 <h2>Futoshiki</h2>
+
+<table>
+    <tr>
+        <td id="A" class="cell">A</td>
+        <td id="AB" class="horizontal operator"></td>
+        <td id="B" class="cell">B</td>
+        <td id="BC" class="horizontal operator"></td>
+        <td id="C" class="cell">C</td>
+        <td id="CD" class="horizontal operator"></td>
+        <td id="D" class="cell">D</td>
+    </tr>
+    <tr>
+        <td id="AE" class="vertical operator"></td>
+        <td class="spacer"></td>
+        <td id="BF" class="vertical operator"></td>
+        <td class="spacer"></td>
+        <td id="CG" class="vertical operator"></td>
+        <td class="spacer"></td>
+        <td id="DH" class="vertical operator"></td>
+    </tr>
+    <tr>
+        <td id="E" class="cell">E</td>
+        <td id="EF" class="horizontal operator"></td>
+        <td id="F" class="cell">F</td>
+        <td id="FG" class="horizontal operator"></td>
+        <td id="G" class="cell">G</td>
+        <td id="GH" class="horizontal operator"></td>
+        <td id="H" class="cell">H</td>
+    </tr>
+    <tr>
+        <td id="EI" class="vertical operator"></td>
+        <td class="spacer"></td>
+        <td id="FJ" class="vertical operator"></td>
+        <td class="spacer"></td>
+        <td id="GK" class="vertical operator"></td>
+        <td class="spacer"></td>
+        <td id="HL" class="vertical operator"></td>
+    </tr>
+    <tr>
+        <td id="I" class="cell">I</td>
+        <td id="IJ" class="horizontal operator"></td>
+        <td id="J" class="cell">J</td>
+        <td id="JK" class="horizontal operator"></td>
+        <td id="K" class="cell">K</td>
+        <td id="KL" class="horizontal operator"></td>
+        <td id="L" class="cell">L</td>
+    </tr>
+    <tr>
+        <td id="IM" class="vertical operator"></td>
+        <td class="spacer"></td>
+        <td id="JN" class="vertical operator"></td>
+        <td class="spacer"></td>
+        <td id="KO" class="vertical operator"></td>
+        <td class="spacer"></td>
+        <td id="LP" class="vertical operator"></td>
+    </tr>
+    <tr>
+        <td id="M" class="cell">M</td>
+        <td id="MN" class="horizontal operator"></td>
+        <td id="N" class="cell">N</td>
+        <td id="NO" class="horizontal operator"></td>
+        <td id="O" class="cell">O</td>
+        <td id="OP" class="horizontal operator"></td>
+        <td id="P" class="cell">P</td>
+    </tr>
+
+</table>
+
 <textarea name="input" rows="5">F2
 P3
 A>B
