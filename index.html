@@ -59,7 +59,7 @@
                 update_rpl();
             });
 
-            jQuery('button').click(function() {
+            jQuery('#button_to_run').click(function() {
                 const $textarea = jQuery('#rpl');
                 const rpl = $textarea.val().split('\n');
                 const dimacs = rpl2dimacs(rpl);
@@ -69,6 +69,13 @@
                 const $table=jQuery('<table>');
                 $table.append(solution_as_array.map(r=>'<tr>'+(r.map(c=>`<td>${c}</td>`))+'</tr>'))
                 $body.append($table);
+            });
+
+            jQuery('#button_to_reset').click(function() {
+                const $all_cells = jQuery('td.cell');
+                const $all_operators = jQuery('td.operator');
+                $all_cells.html(CELL_VALUES[0]);
+                $all_operators.html(CELL_VALUES[0]);
             });
         });
     </script>
@@ -144,7 +151,9 @@
 </table>
 
 <textarea id="rpl" rows="5"></textarea>
-<button>RUN</button>
+<button id="button_to_run">RUN</button>
+<button id="button_to_reset">RESET</button>
+
 <hr>
 </body>
 </html>
