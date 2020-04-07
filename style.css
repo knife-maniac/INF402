@@ -1,15 +1,19 @@
 td {
     margin: 5px;
-    padding:10px;
-    font-family:monospace;
+    padding: 10px;
+    font-family: monospace;
 }
 
 td.cell {
-    border:1px solid blue;
-    cursor:pointer;
+    border: 1px solid blue;
+    cursor: pointer;
 }
 
 td.operator {
-    border:1px solid red;
-    cursor:pointer;
+    border: 1px solid red;
+    cursor: pointer;
+}
+
+td.operator.vertical {
+    transform: rotate(90deg);
 }
