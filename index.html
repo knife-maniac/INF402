@@ -66,7 +66,11 @@
                 const solution_as_dimacs = solve(dimacs);
                 const solution_as_array = dimacs2pretty(solution_as_dimacs);
                 const $body = jQuery('body');
-                const $table=jQuery('<table>');
+
+                const $solution_grid = jQuery('#solution_grid');
+                $solution_grid.remove();
+
+                const $table=jQuery('<table id="solution_grid">');
                 $table.append(solution_as_array.map(r=>'<tr>'+(r.map(c=>`<td>${c}</td>`))+'</tr>'))
                 $body.append($table);
             });
@@ -77,6 +81,9 @@
                 $all_cells.html(CELL_VALUES[0]);
                 $all_operators.html(CELL_VALUES[0]);
                 update_rpl();
+
+                const $solution_grid = jQuery('#solution_grid');
+                $solution_grid.remove();
 
             });
         });
