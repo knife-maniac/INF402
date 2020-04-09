@@ -86,6 +86,9 @@
                 $solution.find('.cell').map(function(i,cell) {
                     jQuery(cell).text(solution[i]);
                 });
+                jQuery('#puzzle .operator').map(function(i,operator) {
+                    $solution.find('#' + operator.id).html(jQuery(operator).html());
+                });
             }
 
             initialize();
