@@ -9,8 +9,9 @@
     <script type="application/javascript" src="lib/minisat.js"></script>
     <script type="application/javascript" src="futoshiki.js"></script>
     <script type="application/javascript">
-        const CELL_VALUES = ['0','1','2','3','4'];
-        const OPERATOR_VALUES = ['0','&lt;','&gt;'];
+        const BLANK='&nbsp;';
+        const CELL_VALUES = [BLANK,'1','2','3','4'];
+        const OPERATOR_VALUES = [BLANK,'&lt;','&gt;'];
 
 
         jQuery(function() {
@@ -31,7 +32,10 @@
 
                 const $all_operators = jQuery('#puzzle div.operator');
                 $all_operators.click(function(event) {
-                    const $target = jQuery(event.target);
+                    let $target = jQuery(event.target);
+                    if (!$target.is('span')) {
+                        $target = $target.children('span');
+                    }
                     const index = OPERATOR_VALUES.indexOf($target.html());
                     $target.html(OPERATOR_VALUES[(index+1)%3]);
                     update_rpl();
@@ -55,8 +59,8 @@
                 const $all_cells = jQuery('#puzzle div.cell');
                 jQuery.each($all_cells,function(index,div) {
                     const $div = jQuery(div);
-                    const value = $div.text();
-                    if (value != '0') {
+                    const value = $div.html();
+                    if (value != BLANK) {
                         const square = div.id;
                         rpl = rpl + square + value + '\n';
                     }
@@ -64,12 +68,12 @@
 
                 const $all_operators = jQuery('#puzzle div.operator');
                 jQuery.each($all_operators,function(index,div) {
-                    const $div = jQuery(div);
-                    const value = $div.text();
-                    if (value != '0') {
+                    const $span = jQuery(div).children('span');
+                    const value_as_html = $span.html();
+                    if (value_as_html != BLANK) {
+                        const value_as_text = $span.text();
                         const squares = div.id.split('');
-
-                        rpl = rpl + squares.join(value) + '\n';
+                        rpl = rpl + squares.join(value_as_text) + '\n';
                     }
                 });
 
