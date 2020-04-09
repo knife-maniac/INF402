@@ -14,24 +14,60 @@
 
 
         jQuery(function() {
+            function initialize() {
+                reset();
+
+                const $cells=jQuery('#grid-template > div');
+                $cells.appendTo('#puzzle');
+                $cells.clone().appendTo('#solution');
+
+                const $all_cells = jQuery('#puzzle div.cell');
+                $all_cells.click(function(event) {
+                    const $target = jQuery(event.target);
+                    const index = CELL_VALUES.indexOf($target.html());
+                    $target.html(CELL_VALUES[(index+1)%5]);
+                    update_rpl();
+                });
+
+                const $all_operators = jQuery('#puzzle div.operator');
+                $all_operators.click(function(event) {
+                    const $target = jQuery(event.target);
+                    const index = OPERATOR_VALUES.indexOf($target.html());
+                    $target.html(OPERATOR_VALUES[(index+1)%3]);
+                    update_rpl();
+                });
+
+            }
+
+            function reset() {
+                const $all_cells = jQuery('div.cell');
+                const $all_operators = jQuery('div.operator');
+                $all_cells.html(CELL_VALUES[0]);
+                $all_operators.html('<span>'+OPERATOR_VALUES[0]+'</span>');
+                update_rpl();
+
+                const $solution_grid = jQuery('#solution_grid');
+                $solution_grid.remove();
+            }
+
             function update_rpl() {
                 let rpl = '';
-                const $all_cells = jQuery('td.cell');
-                jQuery.each($all_cells,function(index,td) {
-                    const $td = jQuery(td);
-                    const value = $td.text();
+                const $all_cells = jQuery('div.cell');
+                jQuery.each($all_cells,function(index,div) {
+                    const $div = jQuery(div);
+                    const value = $div.text();
                     if (value != '0') {
-                        const square = td.id;
+                        const square = div.id;
                         rpl = rpl + square + value + '\n';
                     }
                 });
 
-                const $all_operators = jQuery('td.operator');
-                jQuery.each($all_operators,function(index,td) {
-                    const $td = jQuery(td);
-                    const value = $td.text();
+                const $all_operators = jQuery('div.operator');
+                jQuery.each($all_operators,function(index,div) {
+                    const $div = jQuery(div);
+                    const value = $div.text();
                     if (value != '0') {
-                        const squares = td.id.split('');
+                        const squares = div.id.split('');
 
                         rpl = rpl + squares.join(value) + '\n';
                     }
@@ -41,23 +77,7 @@
                 $rpl.html(rpl);
             }
 
-            const $all_cells = jQuery('td.cell');
-            $all_cells.html(CELL_VALUES[0]);
-            $all_cells.click(function(event) {
-                const $target = jQuery(event.target);
-                const index = CELL_VALUES.indexOf($target.html());
-                $target.html(CELL_VALUES[(index+1)%5]);
-                update_rpl();
-            });
-
-            const $all_operators = jQuery('td.operator');
-            $all_operators.html(OPERATOR_VALUES[0]);
-            $all_operators.click(function(event) {
-                const $target = jQuery(event.target);
-                const index = OPERATOR_VALUES.indexOf($target.html());
-                $target.html(OPERATOR_VALUES[(index+1)%3]);
-                update_rpl();
-            });
+            initialize();
 
             jQuery('#button_to_run').click(function() {
                 const $textarea = jQuery('#rpl');
@@ -67,102 +87,86 @@
                 const solution_as_array = dimacs2pretty(solution_as_dimacs);
                 const $body = jQuery('body');
 
+console.log(solution_as_array);
+/*
                 const $solution_grid = jQuery('#solution_grid');
                 $solution_grid.remove();
 
                 const $table=jQuery('<table id="solution_grid">');
-                $table.append(solution_as_array.map(r=>'<tr>'+(r.map(c=>`<td>${c}</td>`))+'</tr>'))
+                $table.append(solution_as_array.map(r=>'<tr>'+(r.map(c=>`<div>${c}</div>`))+'</tr>'))
                 $body.append($table);
-            });
-
-            jQuery('#button_to_reset').click(function() {
-                const $all_cells = jQuery('td.cell');
-                const $all_operators = jQuery('td.operator');
-                $all_cells.html(CELL_VALUES[0]);
-                $all_operators.html(CELL_VALUES[0]);
-                update_rpl();
-
-                const $solution_grid = jQuery('#solution_grid');
-                $solution_grid.remove();
+*/
 
             });
+
+            jQuery('#button_to_reset').click(reset);
         });
     </script>
 </head>
 <body>
 <h2>Futoshiki</h2>
 
-<table>
-    <tr>
-        <td id="A" class="cell">0</td>
-        <td id="AB" class="horizontal operator">0</td>
-        <td id="B" class="cell">0</td>
-        <td id="BC" class="horizontal operator">0</td>
-        <td id="C" class="cell">0</td>
-        <td id="CD" class="horizontal operator">0</td>
-        <td id="D" class="cell">0</td>
-    </tr>
-    <tr>
-        <td id="AE" class="vertical operator">0</td>
-        <td class="spacer"></td>
-        <td id="BF" class="vertical operator">0</td>
-        <td class="spacer"></td>
-        <td id="CG" class="vertical operator">0</td>
-        <td class="spacer"></td>
-        <td id="DH" class="vertical operator">0</td>
-    </tr>
-    <tr>
-        <td id="E" class="cell">0</td>
-        <td id="EF" class="horizontal operator">0</td>
-        <td id="F" class="cell">0</td>
-        <td id="FG" class="horizontal operator">0</td>
-        <td id="G" class="cell">0</td>
-        <td id="GH" class="horizontal operator">0</td>
-        <td id="H" class="cell">0</td>
-    </tr>
-    <tr>
-        <td id="EI" class="vertical operator">0</td>
-        <td class="spacer"></td>
-        <td id="FJ" class="vertical operator">0</td>
-        <td class="spacer"></td>
-        <td id="GK" class="vertical operator">0</td>
-        <td class="spacer"></td>
-        <td id="HL" class="vertical operator">0</td>
-    </tr>
-    <tr>
-        <td id="I" class="cell">0</td>
-        <td id="IJ" class="horizontal operator">0</td>
-        <td id="J" class="cell">0</td>
-        <td id="JK" class="horizontal operator">0</td>
-        <td id="K" class="cell">0</td>
-        <td id="KL" class="horizontal operator">0</td>
-        <td id="L" class="cell">0</td>
-    </tr>
-    <tr>
-        <td id="IM" class="vertical operator">0</td>
-        <td class="spacer"></td>
-        <td id="JN" class="vertical operator">0</td>
-        <td class="spacer"></td>
-        <td id="KO" class="vertical operator">0</td>
-        <td class="spacer"></td>
-        <td id="LP" class="vertical operator">0</td>
-    </tr>
-    <tr>
-        <td id="M" class="cell">0</td>
-        <td id="MN" class="horizontal operator">0</td>
-        <td id="N" class="cell">0</td>
-        <td id="NO" class="horizontal operator">0</td>
-        <td id="O" class="cell">0</td>
-        <td id="OP" class="horizontal operator">0</td>
-        <td id="P" class="cell">0</td>
-    </tr>
+<div id="puzzle" class="grid"></div>
 
-</table>
-
+<hr>
 <textarea id="rpl" rows="5"></textarea>
 <button id="button_to_run">RUN</button>
 <button id="button_to_reset">RESET</button>
-
 <hr>
+
+<div id="solution" class="grid"></div>
+
+<div id="grid-template" style="display:none">
+    <div id="A" class="cell">0</div>
+    <div id="AB" class="horizontal operator">0</div>
+    <div id="B" class="cell">0</div>
+    <div id="BC" class="horizontal operator">0</div>
+    <div id="C" class="cell">0</div>
+    <div id="CD" class="horizontal operator">0</div>
+    <div id="D" class="cell">0</div>
+    <div id="AE" class="vertical operator"><span>0</span></div>
+    <div class="spacer"></div>
+    <div id="BF" class="vertical operator"><span>0</span></div>
+    <div class="spacer"></div>
+    <div id="CG" class="vertical operator"><span>0</span></div>
+    <div class="spacer"></div>
+    <div id="DH" class="vertical operator"><span>0</span></div>
+    <div id="E" class="cell">0</div>
+    <div id="EF" class="horizontal operator">0</div>
+    <div id="F" class="cell">0</div>
+    <div id="FG" class="horizontal operator">0</div>
+    <div id="G" class="cell">0</div>
+    <div id="GH" class="horizontal operator">0</div>
+    <div id="H" class="cell">0</div>
+    <div id="EI" class="vertical operator"><span>0</span></div>
+    <div class="spacer"></div>
+    <div id="FJ" class="vertical operator"><span>0</span></div>
+    <div class="spacer"></div>
+    <div id="GK" class="vertical operator"><span>0</span></div>
+    <div class="spacer"></div>
+    <div id="HL" class="vertical operator"><span>0</span></div>
+    <div id="I" class="cell">0</div>
+    <div id="IJ" class="horizontal operator">0</div>
+    <div id="J" class="cell">0</div>
+    <div id="JK" class="horizontal operator">0</div>
+    <div id="K" class="cell">0</div>
+    <div id="KL" class="horizontal operator">0</div>
+    <div id="L" class="cell">0</div>
+    <div id="IM" class="vertical operator"><span>0</span></div>
+    <div class="spacer"></div>
+    <div id="JN" class="vertical operator"><span>0</span></div>
+    <div class="spacer"></div>
+    <div id="KO" class="vertical operator"><span>0</span></div>
+    <div class="spacer"></div>
+    <div id="LP" class="vertical operator"><span>0</span></div>
+    <div id="M" class="cell">0</div>
+    <div id="MN" class="horizontal operator">0</div>
+    <div id="N" class="cell">0</div>
+    <div id="NO" class="horizontal operator">0</div>
+    <div id="O" class="cell">0</div>
+    <div id="OP" class="horizontal operator">0</div>
+    <div id="P" class="cell">0</div>
+</div>
+
 </body>
 </html>

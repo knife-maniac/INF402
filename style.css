@@ -1,19 +1,28 @@
-td {
+.grid {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr;
+    grid-template-rows: 1fr auto 1fr auto 1fr auto 1fr;
+}
+
+.grid > div {
     margin: 5px;
     padding: 10px;
     font-family: monospace;
 }
 
-td.cell {
+.cell {
     border: 1px solid blue;
-    cursor: pointer;
 }
 
-td.operator {
+.operator {
     border: 1px solid red;
-    cursor: pointer;
 }
 
-td.operator.vertical {
+.operator.vertical span {
+    display: inline-block;
     transform: rotate(90deg);
+}
+
+#puzzle .cell, #puzzle .operator {
+    cursor: pointer;
 }
