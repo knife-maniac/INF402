@@ -5,9 +5,12 @@
 }
 
 .grid > div {
+    display: flex;
+    font-family: monospace;
     margin: 5px;
     padding: 10px;
-    font-family: monospace;
+    align-content: center;
+    justify-content: center;
 }
 
 .cell {

@@ -52,7 +52,7 @@
 
             function update_rpl() {
                 let rpl = '';
-                const $all_cells = jQuery('div.cell');
+                const $all_cells = jQuery('#puzzle div.cell');
                 jQuery.each($all_cells,function(index,div) {
                     const $div = jQuery(div);
                     const value = $div.text();
@@ -62,7 +62,7 @@
                     }
                 });
 
-                const $all_operators = jQuery('div.operator');
+                const $all_operators = jQuery('#puzzle div.operator');
                 jQuery.each($all_operators,function(index,div) {
                     const $div = jQuery(div);
                     const value = $div.text();
@@ -77,6 +77,13 @@
                 $rpl.html(rpl);
             }
 
+            function update_solution(solution) {
+                const $solution = jQuery('#solution');
+                $solution.find('.cell').map(function(i,cell) {
+                    jQuery(cell).text(solution[i]);
+                });
+            }
+
             initialize();
 
             jQuery('#button_to_run').click(function() {
@@ -85,18 +92,7 @@
                 const dimacs = rpl2dimacs(rpl);
                 const solution_as_dimacs = solve(dimacs);
                 const solution_as_array = dimacs2pretty(solution_as_dimacs);
-                const $body = jQuery('body');
-
-console.log(solution_as_array);
-/*
-                const $solution_grid = jQuery('#solution_grid');
-                $solution_grid.remove();
-
-                const $table=jQuery('<table id="solution_grid">');
-                $table.append(solution_as_array.map(r=>'<tr>'+(r.map(c=>`<div>${c}</div>`))+'</tr>'))
-                $body.append($table);
-*/
-
+                update_solution(solution_as_array.flat());
             });
 
             jQuery('#button_to_reset').click(reset);
