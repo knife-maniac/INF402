@@ -139,6 +139,33 @@ function addRule(list, rule) {
 }
 
 
+function rpl2fnc(rpl) {
+    let fnc = [];
+    for (let rule of rpl) {
+        if (rule[1]=='>' || rule[1]=='<') {
+            let literal1;
+            let literal2;
+            if (rule[1]=='<') {
+                literal1 = rule[0];
+                literal2 = rule[2];
+            } else {
+                literal1 = rule[2];
+                literal2 = rule[0]
+            }
+            fnc.push('-' + literal1 + '2 ' + literal2 + '3 ' + literal2 + '4 0');
+            fnc.push('-' + literal1 + '3 ' + literal2 + '4 0');
+            fnc.push('-' + literal1 + '4 0');
+            fnc.push('-' + literal2 + '3 ' + literal1 + '1 ' + literal1 + '2 0');
+            fnc.push('-' + literal2 + '2 ' + literal1 + '1 0');
+            fnc.push('-' + literal2 + '1 0');
+        } else {
+            fnc.push(rule);
+        }
+    }
+    return fnc;
+}
+
+
 function rpl2dimacs(rpl) {
     let dimacs = generateCNF();
     let numberOfClauses = 576; // Initial number of clauses
