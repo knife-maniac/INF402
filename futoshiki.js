@@ -168,7 +168,7 @@ function rpl2fnc(rpl) {
 
 
 function rpl2dimacs(rpl) {
-    let dimacs = generateCNF();
+    let dimacs = [];
     let numberOfClauses = 576; // Initial number of clauses
 
     for (let rule of rpl) {
@@ -176,6 +176,8 @@ function rpl2dimacs(rpl) {
     }
     dimacs.splice(0,0,'p cnf 64 ' + numberOfClauses);
 
+    const fnc = generateCNF();
+    dimacs = dimacs.concat(fnc);
     return dimacs.join('\n');
 }
 
