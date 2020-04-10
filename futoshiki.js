@@ -141,6 +141,7 @@ function addRule(list, rule) {
 
 function rpl2fnc(rpl) {
     let fnc = [];
+    rpl = rpl.split('\n');
     for (let rule of rpl) {
         if (rule[1]=='>' || rule[1]=='<') {
             let literal1;
@@ -152,17 +153,17 @@ function rpl2fnc(rpl) {
                 literal1 = rule[2];
                 literal2 = rule[0]
             }
-            fnc.push('-' + literal1 + '2 ' + literal2 + '3 ' + literal2 + '4 0');
-            fnc.push('-' + literal1 + '3 ' + literal2 + '4 0');
-            fnc.push('-' + literal1 + '4 0');
-            fnc.push('-' + literal2 + '3 ' + literal1 + '1 ' + literal1 + '2 0');
-            fnc.push('-' + literal2 + '2 ' + literal1 + '1 0');
-            fnc.push('-' + literal2 + '1 0');
+            fnc.push('-' + literal1 + '2 ' + literal2 + '3 ' + literal2 + '4');
+            fnc.push('-' + literal1 + '3 ' + literal2 + '4');
+            fnc.push('-' + literal1 + '4');
+            fnc.push('-' + literal2 + '3 ' + literal1 + '1 ' + literal1 + '2');
+            fnc.push('-' + literal2 + '2 ' + literal1 + '1');
+            fnc.push('-' + literal2 + '1');
         } else {
             fnc.push(rule);
         }
     }
-    return fnc;
+    return fnc.join('\n');
 }
 
 

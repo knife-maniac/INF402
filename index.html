@@ -96,13 +96,17 @@
 
             function set_step(name,content) {
               $$(`#${name} .code`).text(content);
-			  console.log(name,content);
 			}
 			
 			function run() {
 			  const rpl=get_rpl_from_grid();
 			  set_step('rpl',rpl);
-			  
+			  console.log(rpl);
+
+			  const fnc = rpl2fnc(rpl);
+			  console.log(fnc);
+			  set_step('fnc',fnc);
+
               const puzzle_as_dimacs = rpl2dimacs(rpl.split('\n'));
 			  set_step('puzzle-as-dimacs',puzzle_as_dimacs);
 
