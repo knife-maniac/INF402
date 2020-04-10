@@ -3,62 +3,76 @@
 <head>
     <meta charset="UTF-8">
     <title>INF402 - Futoshiki</title>
-    <link rel="stylesheet" href="style.css"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
 
-    <script type="application/javascript" src="lib/jquery-3.4.1.js"></script>
+    <script type="application/javascript" src="lib/jquery-3.4.1.min.js"></script>
     <script type="application/javascript" src="lib/minisat.js"></script>
     <script type="application/javascript" src="futoshiki.js"></script>
+
     <script type="application/javascript">
+	    const $$=jQuery;
+		
         const BLANK='&nbsp;';
         const CELL_VALUES = [BLANK,'1','2','3','4'];
         const OPERATOR_VALUES = [BLANK,'&lt;','&gt;'];
 
 
-        jQuery(function() {
+        $$(function() {
             function initialize() {
-                reset();
+			    function set_constraint_if_not_blank($element,value) {
+					$element[value==BLANK?'removeClass':'addClass']('constraint');
+				}
+                const $template_cells=$$('#grid-template > div');
+                $template_cells.appendTo('#puzzle');
+                $template_cells.clone().appendTo('#solution');
 
-                const $cells=jQuery('#grid-template > div');
-                $cells.appendTo('#puzzle');
-                $cells.clone().appendTo('#solution');
-
-                const $all_cells = jQuery('#puzzle div.cell');
-                $all_cells.click(function(event) {
-                    const $target = jQuery(event.target);
+                const $puzzle_cells = $$('#puzzle .cell');
+                $puzzle_cells.click(function(event) {
+                    const $target = $$(event.target);
                     const index = CELL_VALUES.indexOf($target.html());
-                    $target.html(CELL_VALUES[(index+1)%5]);
-                    update_rpl();
+					const new_value=CELL_VALUES[(index+1)%5];
+                    $target.html(new_value);
+					set_constraint_if_not_blank($target,new_value);
+                    reset_steps_and_solution();
                 });
 
-                const $all_operators = jQuery('#puzzle div.operator');
-                $all_operators.click(function(event) {
-                    let $target = jQuery(event.target);
-                    if (!$target.is('span')) {
-                        $target = $target.children('span');
-                    }
-                    const index = OPERATOR_VALUES.indexOf($target.html());
-                    $target.html(OPERATOR_VALUES[(index+1)%3]);
-                    update_rpl();
+                const $puzzle_operators = $$('#puzzle div.operator');
+                $puzzle_operators.click(function(event) {
+                    let $target = $$(this);
+                    const index = OPERATOR_VALUES.indexOf($target.children('span').html());
+					const new_value = OPERATOR_VALUES[(index+1)%3];
+                    $target.html('<span>'+new_value+'</span>');
+					set_constraint_if_not_blank($target,new_value);
+                    reset_steps_and_solution();
                 });
 
+                reset_puzzle();
             }
 
-            function reset() {
-                const $all_cells = jQuery('div.cell');
-                const $all_operators = jQuery('div.operator');
-                $all_cells.html(CELL_VALUES[0]);
-                $all_operators.html('<span>'+OPERATOR_VALUES[0]+'</span>');
-                update_rpl();
-
-                const $solution_grid = jQuery('#solution_grid');
-                $solution_grid.remove();
+            function reset_grid(id) {
+			    const $grid=$$(id);
+                const $cells = $grid.find('.cell');
+                $cells.html(CELL_VALUES[0]);
+                const $operators = $grid.find('.operator');
+                $operators.html('<span>'+OPERATOR_VALUES[0]+'</span>');
+			    $grid.children().removeClass('constraint');
+            }
+            function reset_puzzle() {
+			    reset_grid('#puzzle');
+				reset_steps_and_solution();
+            }
+            function reset_steps_and_solution() {
+                $$('.step .code').empty();
+			    reset_grid('#solution');
+                $$('#solution-container > .message').hide();
             }
 
-            function update_rpl() {
+            function get_rpl_from_grid() {
                 let rpl = '';
-                const $all_cells = jQuery('#puzzle div.cell');
-                jQuery.each($all_cells,function(index,div) {
-                    const $div = jQuery(div);
+                const $puzzle_cells = $$('#puzzle div.cell');
+                $$.each($puzzle_cells,function(index,div) {
+                    const $div = $$(div);
                     const value = $div.html();
                     if (value != BLANK) {
                         const square = div.id;
@@ -66,9 +80,9 @@
                     }
                 });
 
-                const $all_operators = jQuery('#puzzle div.operator');
-                jQuery.each($all_operators,function(index,div) {
-                    const $span = jQuery(div).children('span');
+                const $puzzle_operators = $$('#puzzle div.operator');
+                $$.each($puzzle_operators,function(index,div) {
+                    const $span = $$(div).children('span');
                     const value_as_html = $span.html();
                     if (value_as_html != BLANK) {
                         const value_as_text = $span.text();
@@ -77,47 +91,105 @@
                     }
                 });
 
-                const $rpl = jQuery('#rpl');
-                $rpl.html(rpl);
+				return rpl;
             }
 
-            function update_solution(solution) {
-                const $solution = jQuery('#solution');
+            function set_step(name,content) {
+              $$(`#${name} .code`).text(content);
+			  console.log(name,content);
+			}
+			
+			function run() {
+			  const rpl=get_rpl_from_grid();
+			  set_step('rpl',rpl);
+			  
+              const puzzle_as_dimacs = rpl2dimacs(rpl.split('\n'));
+			  set_step('puzzle-as-dimacs',puzzle_as_dimacs);
+
+			  const solution_as_dimacs = solve(puzzle_as_dimacs);
+			  set_step('solution-as-dimacs',solution_as_dimacs.replace(/ /g,'\n'));
+			  
+              const solution_as_array = dimacs2pretty(solution_as_dimacs);
+			  if(solution_as_array.length) {
+                update_solution_grid(solution_as_array.flat());
+			  }
+			}
+
+			function update_solution_grid(solution) {
+                const $solution = $$('#solution');
                 $solution.find('.cell').map(function(i,cell) {
-                    jQuery(cell).text(solution[i]);
+                    $$(cell).text(solution[i]);
                 });
-                jQuery('#puzzle .operator').map(function(i,operator) {
-                    $solution.find('#' + operator.id).html(jQuery(operator).html());
+                $$('#puzzle .operator').map(function(i,operator) {
+                    $solution.find('#' + operator.id).html($$(operator).html());
                 });
             }
 
             initialize();
 
-            jQuery('#button_to_run').click(function() {
-                const $textarea = jQuery('#rpl');
-                const rpl = $textarea.val().split('\n');
-                const dimacs = rpl2dimacs(rpl);
-                const solution_as_dimacs = solve(dimacs);
-                const solution_as_array = dimacs2pretty(solution_as_dimacs);
-                update_solution(solution_as_array.flat());
-            });
+            $$('#run.button').click(run);
 
-            jQuery('#button_to_reset').click(reset);
+            $$('#reset.button').click(function() {
+			  reset_puzzle();
+              //$$('#help').show();;
+			});
         });
     </script>
 </head>
 <body>
-<h2>Futoshiki</h2>
 
-<div id="puzzle" class="grid"></div>
+<div class="banner">
+<span class="title">INF402 SAT Solver<br></span>
+<span class="subtitle">Ruben QUAST</span><span class="source"><a href="https://github.com/knife-maniac/INF402.git">view source code on github</a></span>
+</div>
 
-<hr>
-<textarea id="rpl" rows="5"></textarea>
-<button id="button_to_run">RUN</button>
-<button id="button_to_reset">RESET</button>
-<hr>
+<div id="game">
+  <div id="puzzle-container" class="container">
+    <div class="title">PUZZLE</div>
+    <div id="puzzle" class="grid"></div>
+  </div>
 
-<div id="solution" class="grid"></div>
+  <div class="space">
+    <div id="run" class="button material-icons">play_arrow</div>
+    <div id="reset" class="button material-icons">delete</div>
+  </div>
+  
+  <div id="solution-container" class="container">
+    <div class="title">SOLUTION</div>
+    <div id="solution" class="grid"></div>
+    <div id="help" class="message">
+	  set puzzle constraints by clicking on buttons on the left,</br>
+	  then solve by clicking the PLAY button
+	</div>
+    <div id="no-solution" class="message">
+	  no solution matches the constraints
+	</div>
+  </div>
+  
+  <div class="vertical space"><span class="material-icons path" style="transform:rotate(90deg)">arrow_forward</span></div>
+  <div class="big space"></div>
+  <div class="vertical space"><span class="material-icons path" style="transform:rotate(-90deg)">arrow_forward</span></div>
+
+  <div id="rpl" class="step">
+    <div class="title">RPL</div>
+    <div class="code"></div>
+  </div>
+  <div class="horizontal space"><span class="material-icons path">arrow_forward</span></div>
+  <div id="fnc" class="step">
+    <div class="title">FNC</div>
+    <div class="code"></div>
+  </div>
+  <div class="horizontal space material-icons path">arrow_forward</div>
+  <div id="puzzle-as-dimacs" class="step">
+    <div class="title">DIMACS puzzle</div>
+    <div class="code"></div>
+  </div>
+  <div class="horizontal space material-icons path">arrow_forward</div>
+  <div id="solution-as-dimacs" class="step">
+    <div class="title">DIMACS solution</div>
+    <div class="code"></div>
+  </div>
+</div>
 
 <div id="grid-template" style="display:none">
     <div id="A" class="cell">0</div>
