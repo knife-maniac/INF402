@@ -28,7 +28,7 @@
                 $template_cells.clone().appendTo('#solution');
 
                 const $puzzle_cells = $$('#puzzle .cell');
-                $puzzle_cells.click(function(event) {
+                $puzzle_cells.mousedown(function(event) {
                     const $target = $$(event.target);
                     const index = CELL_VALUES.indexOf($target.html());
 					const new_value=CELL_VALUES[(index+1)%5];
@@ -38,7 +38,7 @@
                 });
 
                 const $puzzle_operators = $$('#puzzle div.operator');
-                $puzzle_operators.click(function(event) {
+                $puzzle_operators.mousedown(function(event) {
                     let $target = $$(this);
                     const index = OPERATOR_VALUES.indexOf($target.children('span').html());
 					const new_value = OPERATOR_VALUES[(index+1)%3];
@@ -143,8 +143,8 @@
 <body>
 
 <div class="banner">
-<span class="title">INF402 SAT Solver<br></span>
-<span class="subtitle">Ruben QUAST</span><span class="source"><a href="https://github.com/knife-maniac/INF402.git">view source code on github</a></span>
+<span class="title">Projet INF402<br></span>
+<span class="subtitle">Ruben QUAST</span><span class="source"><a href="https://github.com/knife-maniac/INF402.git">voir le code source sur github</a></span>
 </div>
 
 <div id="game">
@@ -175,22 +175,22 @@
   <div class="vertical space"><span class="material-icons path" style="transform:rotate(-90deg)">arrow_forward</span></div>
 
   <div id="rpl" class="step">
-    <div class="title">RPL</div>
+    <div class="title">Modélisation du puzzle</div>
     <div class="code"></div>
   </div>
   <div class="horizontal space"><span class="material-icons path">arrow_forward</span></div>
   <div id="fnc" class="step">
-    <div class="title">FNC</div>
+    <div class="title">Forme Normale Conjonctive</div>
     <div class="code"></div>
   </div>
   <div class="horizontal space material-icons path">arrow_forward</div>
   <div id="puzzle-as-dimacs" class="step">
-    <div class="title">DIMACS puzzle</div>
+    <div class="title">Puzzle au format dimacs</div>
     <div class="code"></div>
   </div>
   <div class="horizontal space material-icons path">arrow_forward</div>
   <div id="solution-as-dimacs" class="step">
-    <div class="title">DIMACS solution</div>
+    <div class="title">Solution au format dimacs</div>
     <div class="code"></div>
   </div>
 </div>
