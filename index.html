@@ -90,7 +90,6 @@
                         rpl = rpl + squares.join(value_as_text) + '\n';
                     }
                 });
-
 				return rpl;
             }
 
@@ -101,13 +100,11 @@
 			function run() {
                 const rpl=get_rpl_from_grid();
                 set_step('rpl',rpl);
-                console.log(rpl);
 
                 const fnc = rpl2fnc(rpl);
-                console.log(fnc);
                 set_step('fnc',fnc);
 
-                const puzzle_as_dimacs = rpl2dimacs(rpl.split('\n'));
+                const puzzle_as_dimacs = fnc2dimacs(fnc);
                 set_step('puzzle-as-dimacs',puzzle_as_dimacs);
 
                 const solution_as_dimacs = solve(puzzle_as_dimacs);

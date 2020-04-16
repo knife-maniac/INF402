@@ -29,8 +29,8 @@ function solve(problem_as_dimacs) {
 
 
 function giveAllSquaresOnTheSameLineOrColumn(literal) {
-    let square = literal[0];
-    let value = literal[1];
+    const square = literal[0];
+    const value = literal[1];
     let result = [];
     for (let i=1; i<=4; ++i) {
         if (i!=value) {
@@ -43,9 +43,9 @@ function giveAllSquaresOnTheSameLineOrColumn(literal) {
                    ['I','J','K','L'],
                    ['M','N','O','P']];
 
-    for (let line of lines) {
+    for (const line of lines) {
         if (line.includes(square)) {
-            for (let squareOnTheSameLine of line) {
+            for (const squareOnTheSameLine of line) {
                 if (squareOnTheSameLine!=square) {
                     result.push(squareOnTheSameLine+value);
                 }
@@ -58,9 +58,9 @@ function giveAllSquaresOnTheSameLineOrColumn(literal) {
                      ['C','G','K','O'],
                      ['D','H','L','P']];
 
-    for (let column of columns) {
+    for (const column of columns) {
         if (column.includes(square)) {
-            for (let squareOnTheSameColumn of column) {
+            for (const squareOnTheSameColumn of column) {
                 if (squareOnTheSameColumn!=square) {
                     result.push(squareOnTheSameColumn+value);
                 }
@@ -74,13 +74,16 @@ function giveAllSquaresOnTheSameLineOrColumn(literal) {
 
 
 function literal2int(literal) {
-    let square = literal[0];
-    let value = literal[1];
+    const isNegative = literal[0]==='-';
+    const square = isNegative? literal[1]:literal[0];
+    const value = isNegative? literal[2]:literal[1];
 
-    let A = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P'].indexOf(square);
-    let B = parseInt(value);
+    const A = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P'].indexOf(square);
+    const B = parseInt(value);
 
-    return 4*A+B;
+    const unsigned_result = 4*A+B;
+    const result = isNegative? -unsigned_result:unsigned_result;
+    return result;
 }
 
 function int2literal(value) {
@@ -94,7 +97,7 @@ function int2literal(value) {
 }
 
 
-function generateCNF() {
+function generateGameRules() {
     let result = [];
     for (let square of ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P']) {
         result.push(literal2int(square+'1') + ' ' + literal2int(square+'2') + ' ' + literal2int(square+'3') + ' ' + literal2int(square+'4') + ' 0');
@@ -111,37 +114,23 @@ function generateCNF() {
 }
 
 
-function addRule(list, rule) {
-    let result = 0;
-    if (rule.length === 2) {
-        list.push(literal2int(rule) + ' 0');
-        result = 1;
-    } else if (rule.length === 3 || rule.length === 5) {
-        let square1, square2;
-        if (rule[1] === '<' || rule[2] === '<') {
-            square1 = rule[0];
-            square2 = rule[rule.length-1];
-        } else {
-            square1 = rule[rule.length-1];
-            square2 = rule[0];
-        }
-
-        list.push('-' + literal2int(square1 + '2') + ' ' + literal2int(square2 + '3') + ' ' + literal2int(square2 + '4') + ' 0');
-        list.push('-' + literal2int(square1 + '3') + ' ' + literal2int(square2 + '4') + ' 0');
-        list.push('-' + literal2int(square1 + '4') + ' 0');
-        list.push('-' + literal2int(square2 + '3') + ' ' + literal2int(square1 + '1') + ' ' + literal2int(square1 + '2') + ' 0');
-        list.push('-' + literal2int(square2 + '2') + ' ' + literal2int(square1 + '1') + ' 0');
-        list.push('-' + literal2int(square2 + '1') + ' 0');
-        result = 6;
+function addClause(list, clause_as_rpl) {
+    const literals = clause_as_rpl.split(' ');
+    let clause_as_dimacs = [];
+    for (const literal of literals) {
+        clause_as_dimacs.push(literal2int(literal));
     }
-
-    return result;
+    clause_as_dimacs.push('0');
+    list.push(clause_as_dimacs.join(' '));
+    return literals.length;
 }
 
 
 function rpl2fnc(rpl) {
     let fnc = [];
     rpl = rpl.split('\n');
+    rpl = rpl.slice(0,-1);
+
     for (let rule of rpl) {
         if (rule[1]=='>' || rule[1]=='<') {
             let literal1;
@@ -163,21 +152,23 @@ function rpl2fnc(rpl) {
             fnc.push(rule);
         }
     }
+
     return fnc.join('\n');
 }
 
 
-function rpl2dimacs(rpl) {
+function fnc2dimacs(fnc) {
     let dimacs = [];
     let numberOfClauses = 576; // Initial number of clauses
+    fnc = fnc.split('\n');
 
-    for (let rule of rpl) {
-        numberOfClauses += addRule(dimacs,rule);
+    for (let clause of fnc) {
+        numberOfClauses += addClause(dimacs,clause);
     }
     dimacs.splice(0,0,'p cnf 64 ' + numberOfClauses);
 
-    const fnc = generateCNF();
-    dimacs = dimacs.concat(fnc);
+    const gameRules = generateGameRules();
+    dimacs = dimacs.concat(gameRules);
     return dimacs.join('\n');
 }
 
@@ -210,7 +201,8 @@ function dimacs2pretty(dimacs) {
 
 
 function run(rpl) {
-    const puzzle_as_dimacs = rpl2dimacs(rpl);
+    const fnc = rpl2fnc(rpl);
+    const puzzle_as_dimacs = fnc2dimacs(fnc);
     const solution_as_dimacs = solve(puzzle_as_dimacs);
     const solution_as_array = dimacs2pretty(solution_as_dimacs);
     return solution_as_array;
