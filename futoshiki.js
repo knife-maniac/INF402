@@ -205,5 +205,11 @@ function run(rpl) {
     const puzzle_as_dimacs = fnc2dimacs(fnc);
     const solution_as_dimacs = solve(puzzle_as_dimacs);
     const solution_as_array = dimacs2pretty(solution_as_dimacs);
-    return solution_as_array;
+    return {
+        rpl,
+        fnc,
+        puzzle_as_dimacs,
+        solution_as_dimacs,
+        solution_as_array
+    };
 }

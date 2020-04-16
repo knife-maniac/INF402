@@ -96,25 +96,6 @@
             function set_step(name,content) {
                 $$(`#${name} .code`).text(content);
 			}
-			
-			function run() {
-                const rpl=get_rpl_from_grid();
-                set_step('rpl',rpl);
-
-                const fnc = rpl2fnc(rpl);
-                set_step('fnc',fnc);
-
-                const puzzle_as_dimacs = fnc2dimacs(fnc);
-                set_step('puzzle-as-dimacs',puzzle_as_dimacs);
-
-                const solution_as_dimacs = solve(puzzle_as_dimacs);
-                set_step('solution-as-dimacs',solution_as_dimacs.replace(/ /g,'\n'));
-
-                const solution_as_array = dimacs2pretty(solution_as_dimacs);
-                if(solution_as_array.length) {
-                    update_solution_grid(solution_as_array.flat());
-                }
-			}
 
 			function update_solution_grid(solution) {
                 const $solution = $$('#solution');
@@ -128,7 +109,19 @@
 
             initialize();
 
-            $$('#run.button').click(run);
+            $$('#run.button').click(function() {
+                const rpl=get_rpl_from_grid();
+                const result = run(rpl);
+
+                set_step('rpl',result.rpl);
+                set_step('fnc',result.fnc);
+                set_step('puzzle-as-dimacs',result.puzzle_as_dimacs);
+                set_step('solution-as-dimacs',result.solution_as_dimacs.replace(/ /g,'\n'));
+
+                if(result.solution_as_array.length) {
+                    update_solution_grid(result.solution_as_array.flat());
+                }
+            });
 
             $$('#reset.button').click(function() {
 			    reset_puzzle();
