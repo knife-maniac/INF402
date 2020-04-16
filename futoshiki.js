@@ -207,3 +207,11 @@ function dimacs2pretty(dimacs) {
 
     return result;
 }
+
+
+function run(rpl) {
+    const puzzle_as_dimacs = rpl2dimacs(rpl);
+    const solution_as_dimacs = solve(puzzle_as_dimacs);
+    const solution_as_array = dimacs2pretty(solution_as_dimacs);
+    return solution_as_array;
+}
