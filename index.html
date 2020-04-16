@@ -95,28 +95,28 @@
             }
 
             function set_step(name,content) {
-              $$(`#${name} .code`).text(content);
+                $$(`#${name} .code`).text(content);
 			}
 			
 			function run() {
-			  const rpl=get_rpl_from_grid();
-			  set_step('rpl',rpl);
-			  console.log(rpl);
+                const rpl=get_rpl_from_grid();
+                set_step('rpl',rpl);
+                console.log(rpl);
 
-			  const fnc = rpl2fnc(rpl);
-			  console.log(fnc);
-			  set_step('fnc',fnc);
+                const fnc = rpl2fnc(rpl);
+                console.log(fnc);
+                set_step('fnc',fnc);
 
-              const puzzle_as_dimacs = rpl2dimacs(rpl.split('\n'));
-			  set_step('puzzle-as-dimacs',puzzle_as_dimacs);
+                const puzzle_as_dimacs = rpl2dimacs(rpl.split('\n'));
+                set_step('puzzle-as-dimacs',puzzle_as_dimacs);
 
-			  const solution_as_dimacs = solve(puzzle_as_dimacs);
-			  set_step('solution-as-dimacs',solution_as_dimacs.replace(/ /g,'\n'));
-			  
-              const solution_as_array = dimacs2pretty(solution_as_dimacs);
-			  if(solution_as_array.length) {
-                update_solution_grid(solution_as_array.flat());
-			  }
+                const solution_as_dimacs = solve(puzzle_as_dimacs);
+                set_step('solution-as-dimacs',solution_as_dimacs.replace(/ /g,'\n'));
+
+                const solution_as_array = dimacs2pretty(solution_as_dimacs);
+                if(solution_as_array.length) {
+                    update_solution_grid(solution_as_array.flat());
+                }
 			}
 
 			function update_solution_grid(solution) {
@@ -134,8 +134,8 @@
             $$('#run.button').click(run);
 
             $$('#reset.button').click(function() {
-			  reset_puzzle();
-              //$$('#help').show();;
+			    reset_puzzle();
+                //$$('#help').show();;
 			});
         });
     </script>
@@ -148,51 +148,51 @@
 </div>
 
 <div id="game">
-  <div id="puzzle-container" class="container">
-    <div class="title">PUZZLE</div>
-    <div id="puzzle" class="grid"></div>
-  </div>
+    <div id="puzzle-container" class="container">
+        <div class="title">PUZZLE</div>
+        <div id="puzzle" class="grid"></div>
+    </div>
 
-  <div class="space">
-    <div id="run" class="button material-icons">play_arrow</div>
-    <div id="reset" class="button material-icons">delete</div>
-  </div>
+    <div class="space">
+        <div id="run" class="button material-icons">play_arrow</div>
+        <div id="reset" class="button material-icons">delete</div>
+    </div>
   
-  <div id="solution-container" class="container">
-    <div class="title">SOLUTION</div>
-    <div id="solution" class="grid"></div>
-    <div id="help" class="message">
-	  set puzzle constraints by clicking on buttons on the left,</br>
-	  then solve by clicking the PLAY button
-	</div>
-    <div id="no-solution" class="message">
-	  no solution matches the constraints
-	</div>
-  </div>
+    <div id="solution-container" class="container">
+        <div class="title">SOLUTION</div>
+        <div id="solution" class="grid"></div>
+        <div id="help" class="message">
+	        set puzzle constraints by clicking on buttons on the left,</br>
+	        then solve by clicking the PLAY button
+	    </div>
+        <div id="no-solution" class="message">
+	        no solution matches the constraints
+	    </div>
+    </div>
   
-  <div class="vertical space"><span class="material-icons path" style="transform:rotate(90deg)">arrow_forward</span></div>
-  <div class="big space"></div>
-  <div class="vertical space"><span class="material-icons path" style="transform:rotate(-90deg)">arrow_forward</span></div>
+    <div class="vertical space"><span class="material-icons path" style="transform:rotate(90deg)">arrow_forward</span></div>
+    <div class="big space"></div>
+    <div class="vertical space"><span class="material-icons path" style="transform:rotate(-90deg)">arrow_forward</span></div>
 
-  <div id="rpl" class="step">
-    <div class="title">Modélisation du puzzle</div>
-    <div class="code"></div>
-  </div>
-  <div class="horizontal space"><span class="material-icons path">arrow_forward</span></div>
-  <div id="fnc" class="step">
-    <div class="title">Forme Normale Conjonctive</div>
-    <div class="code"></div>
-  </div>
-  <div class="horizontal space material-icons path">arrow_forward</div>
-  <div id="puzzle-as-dimacs" class="step">
-    <div class="title">Puzzle au format dimacs</div>
-    <div class="code"></div>
-  </div>
-  <div class="horizontal space material-icons path">arrow_forward</div>
-  <div id="solution-as-dimacs" class="step">
-    <div class="title">Solution au format dimacs</div>
-    <div class="code"></div>
-  </div>
+    <div id="rpl" class="step">
+        <div class="title">Modélisation du puzzle</div>
+        <div class="code"></div>
+    </div>
+    <div class="horizontal space"><span class="material-icons path">arrow_forward</span></div>
+    <div id="fnc" class="step">
+        <div class="title">Forme Normale Conjonctive</div>
+        <div class="code"></div>
+    </div>
+    <div class="horizontal space material-icons path">arrow_forward</div>
+    <div id="puzzle-as-dimacs" class="step">
+        <div class="title">Puzzle au format dimacs</div>
+        <div class="code"></div>
+    </div>
+    <div class="horizontal space material-icons path">arrow_forward</div>
+    <div id="solution-as-dimacs" class="step">
+        <div class="title">Solution au format dimacs</div>
+        <div class="code"></div>
+    </div>
 </div>
 
 <div id="grid-template" style="display:none">
