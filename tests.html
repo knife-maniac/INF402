@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>INF402 - Futoshiki (tests)</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
+
+    <script type="application/javascript" src="lib/jquery-3.4.1.min.js"></script>
+    <script type="application/javascript" src="lib/minisat.js"></script>
+    <script type="application/javascript" src="futoshiki.js"></script>
+
+    <script type="application/javascript">
+
+        jQuery(function() {
+            const $=jQuery;
+
+            function number_of_occurrences_in_array(arr, x) {
+                return arr.filter(e=>e===x).length;
+            }
+
+            function solution_is_valid(solution) {
+                let is_valid = true;
+
+                for (const row of solution) {
+                    is_valid &= number_of_occurrences_in_array(row, '1') === 1;
+                    is_valid &= number_of_occurrences_in_array(row, '2') === 1;
+                    is_valid &= number_of_occurrences_in_array(row, '3') === 1;
+                    is_valid &= number_of_occurrences_in_array(row, '4') === 1;
+                }
+
+                for (let i = 0; i < 4; i++) {
+                    const column = [solution[0][i], solution[1][i], solution[2][i], solution[3][i]];
+                    is_valid &= number_of_occurrences_in_array(column, '1') === 1;
+                    is_valid &= number_of_occurrences_in_array(column, '2') === 1;
+                    is_valid &= number_of_occurrences_in_array(column, '3') === 1;
+                    is_valid &= number_of_occurrences_in_array(column, '4') === 1;
+                }
+
+                return is_valid;
+            }
+
+
+            function solution_respects_constraints (solution,rpl) {
+                let result = true;
+                for (const constraint of rpl.split().filter(e=>e.length>0)) {
+                    const square_name = constraint[0];
+                    const square_value = solution.flat()[SQUARES.indexOf(square_name)];
+                    const operator_or_value = constraint[1];
+                    if (['<','>'].includes(operator_or_value)) {
+                        const operator = operator_or_value;
+                        const other_square_name = constraint[2];
+                        const other_square_value = solution.flat()[SQUARES.indexOf(other_square_name)];
+                        result &= (operator==='<')? square_value<other_square_name : other_square_value<square_value;
+                    } else {
+                        const value = operator_or_value;
+                        result &= value === square_value;
+                    }
+                    if (!result) {
+                        break;
+                    }
+
+                }
+                return result;
+            }
+
+            function test(title, rpl) {
+                const result = run(rpl);
+                const $body = $('body');
+                if (result.solution_as_array.length) {
+                    if (solution_is_valid(result.solution_as_array) && solution_respects_constraints(result.solution_as_array,rpl)) {
+                        $body.append('<div>OK</div>');
+                    } else {
+                        $body.append('<div>NOT OK</div>');
+                    }
+                } else {
+                    $body.append('<div>No solution</div>');
+                }
+            }
+
+
+            test('test with one value', 'A1\n');
+            test('test with three values', 'A1\nB2\nD4\n');
+            test('test with three values + one inferior sign', 'A1\nB2\nD4\nK<O');
+
+            test('test with two impossible values', 'A1\nA2\n');
+            test('test with two impossible values', 'A1\nB1\n');
+            test('test with two impossible values', 'A2\nD2\n');
+            test('test with two impossible values', 'A4\nM4\n');
+
+        });
+
+    </script>
+</head>
+<body></body>

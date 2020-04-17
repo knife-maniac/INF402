@@ -1,5 +1,8 @@
 // Project INF402
 
+const SQUARES = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P'];
+
+
 function solve(problem_as_dimacs) {
     var solve_string = Module.cwrap('solve_string', 'string', ['string', 'int']);
     var oldPrint = Module.print;
@@ -78,7 +81,7 @@ function literal2int(literal) {
     const square = isNegative? literal[1]:literal[0];
     const value = isNegative? literal[2]:literal[1];
 
-    const A = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P'].indexOf(square);
+    const A = SQUARES.indexOf(square);
     const B = parseInt(value);
 
     const unsigned_result = 4*A+B;
@@ -87,19 +90,18 @@ function literal2int(literal) {
 }
 
 function int2literal(value) {
-    const squares = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P'];
     let letterIndex = 0;
     while(value>4) {
         value-=4;
         ++letterIndex;
     }
-    return squares[letterIndex] + value;
+    return SQUARES[letterIndex] + value;
 }
 
 
 function generateGameRules() {
     let result = [];
-    for (let square of ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P']) {
+    for (let square of SQUARES) {
         result.push(literal2int(square+'1') + ' ' + literal2int(square+'2') + ' ' + literal2int(square+'3') + ' ' + literal2int(square+'4') + ' 0');
 
         for (let value of ['1','2','3','4']) {
