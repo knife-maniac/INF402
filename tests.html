@@ -4,11 +4,29 @@
     <meta charset="UTF-8">
     <title>INF402 - Futoshiki (tests)</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link href="style.css" rel="stylesheet">
 
     <script type="application/javascript" src="lib/jquery-3.4.1.min.js"></script>
     <script type="application/javascript" src="lib/minisat.js"></script>
     <script type="application/javascript" src="futoshiki.js"></script>
+
+    <style>
+        body {
+            font-family: sans-serif;
+        }
+        table {
+            border-collapse: collapse;
+            margin:auto;
+        }
+        tr:nth-child(odd) {
+            background-color: #eeeeee;
+        }
+        td {
+            padding: 10px;
+        }
+        span {
+            color:green;
+        }
+    </style>
 
     <script type="application/javascript">
 
@@ -64,32 +82,49 @@
                 return result;
             }
 
-            function test(title, rpl) {
+            function test(title, rpl, has_solution) {
+                let success = false;
                 const result = run(rpl);
-                const $body = $('body');
                 if (result.solution_as_array.length) {
                     if (solution_is_valid(result.solution_as_array) && solution_respects_constraints(result.solution_as_array,rpl)) {
-                        $body.append('<div>OK</div>');
-                    } else {
-                        $body.append('<div>NOT OK</div>');
+                        success = true;
                     }
                 } else {
-                    $body.append('<div>No solution</div>');
+                    success = !has_solution;
                 }
+                return success;
             }
 
 
-            test('test with one value', 'A1\n');
-            test('test with three values', 'A1\nB2\nD4\n');
-            test('test with three values + one inferior sign', 'A1\nB2\nD4\nK<O');
+            const tests = [
+                ['one value', 'A1\n',true],
+                ['three values', 'A1\nB2\nD4\n',true],
+                ['three values + one inferior sign', 'A1\nB2\nD4\nK<O\n',true],
 
-            test('test with two impossible values', 'A1\nA2\n');
-            test('test with two impossible values', 'A1\nB1\n');
-            test('test with two impossible values', 'A2\nD2\n');
-            test('test with two impossible values', 'A4\nM4\n');
+                ['two impossible values same square', 'A1\nA2\n',false],
+                ['two impossible values same line adjacent', 'A1\nB1\n',false],
+                ['two impossible values same line extremes', 'A2\nD2\n',false],
+                ['two impossible values same column', 'A4\nM4\n',false]
+            ];
+
+            const $table = $('table');
+            tests.map(test_case=>{
+                const [title, rpl, has_solution] = test_case;
+                const success = test(...test_case);
+                $table.append(`
+<tr>
+    <td><span class="material-icons">${success ? 'done':'error'}</span></td>
+    <td>${title}</td>
+    <td>${rpl}</td>
+</tr>`);
+            });
 
         });
 
     </script>
 </head>
-<body></body>
+<body>
+<table>
+
+</table>
+</body>
