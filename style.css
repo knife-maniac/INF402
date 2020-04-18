@@ -24,11 +24,12 @@ body {
   font-stretch: ultra-expanded;
   font-weight: bolder;
 }
-.banner .source a {
-  color: #4FC3F7;
-  float: right;
+.banner .link a {
+    color: #4FC3F7;
+    float: right;
+    text-align: right;
 }
-.banner .source a:hover {
+.banner .link a:hover {
   color: cyan;
 }
 
