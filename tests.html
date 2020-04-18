@@ -22,9 +22,14 @@
         }
         td {
             padding: 10px;
+            vertical-align: top;
         }
         span {
             color:green;
+        }
+        td.code {
+            white-space:pre;
+            font-family: monospace;
         }
     </style>
 
@@ -84,15 +89,15 @@
 
             function test(title, rpl, has_solution) {
                 let success = false;
-                const result = run(rpl);
-                if (result.solution_as_array.length) {
-                    if (solution_is_valid(result.solution_as_array) && solution_respects_constraints(result.solution_as_array,rpl)) {
+                const puzzle = run(rpl);
+                if (puzzle.solution_as_array.length) {
+                    if (solution_is_valid(puzzle.solution_as_array) && solution_respects_constraints(puzzle.solution_as_array,rpl)) {
                         success = true;
                     }
                 } else {
                     success = !has_solution;
                 }
-                return success;
+                return {puzzle,success};
             }
 
 
@@ -110,12 +115,13 @@
             const $table = $('table');
             tests.map(test_case=>{
                 const [title, rpl, has_solution] = test_case;
-                const success = test(...test_case);
+                const result = test(...test_case);
                 $table.append(`
 <tr>
-    <td><span class="material-icons">${success ? 'done':'error'}</span></td>
+    <td><span class="material-icons">${result.success ? 'done':'error'}</span></td>
     <td>${title}</td>
-    <td>${rpl}</td>
+    <td class="code">${rpl.replace(/</g,'&lt;')}</td>
+    <td class="code">${result.puzzle.solution_as_array.map(r=>r.join(' ')).join('\n')}</td>
 </tr>`);
             });
 
