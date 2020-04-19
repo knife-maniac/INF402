@@ -19,7 +19,7 @@ body {
   padding: 10px;
 }
 .banner .title {
-  color: #F8C471;
+  color: orange;/*#F8C471;*/
   font-size: 200%;
   font-stretch: ultra-expanded;
   font-weight: bolder;
@@ -160,12 +160,15 @@ body {
 .grid .cell {
     background-color: #999;
 }
-#puzzle .cell.constraint, #puzzle .cell.constraint:hover  {
-    background-color: green;
+#puzzle .cell.constraint {
+    background-color: mediumpurple;
     color: white;
 }
+#puzzle .cell.constraint:hover {
+    background-color: #daaeff;
+}
 #puzzle .cell:hover {
-    background-color: #eee;
+    background-color: #ffffff;
 }
 
 .grid .operator {
@@ -174,9 +177,12 @@ body {
 #puzzle .operator:hover {
     background-color: #eee;
 }
-#puzzle .operator.constraint, #puzzle .operator.constraint:hover  {
+#puzzle .operator.constraint {
     background-color: orange;
     color: white;
+}
+#puzzle .operator.constraint:hover {
+    background-color: #ffdb96;
 }
 #solution .operator {
     background-color: #303030;
