@@ -162,7 +162,9 @@ function rpl2fnc(rpl) {
 function fnc2dimacs(fnc) {
     let dimacs = [];
     let numberOfClauses = 576; // Initial number of clauses
-    fnc = fnc.split('\n');
+    if (fnc.length) {
+        fnc = fnc.split('\n');
+    }
 
     for (let clause of fnc) {
         numberOfClauses += addClause(dimacs,clause);
