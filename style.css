@@ -73,19 +73,6 @@ body {
 .button:active {
   background-color: pink;
 }
-
-.message {
-  color: #bbbbbb;
-  text-align: center;
-}
-#help {
-  color: #bbbbbb;
-}
-#no-solution {
-  color: red;
-  display: none;
-}
-
 .space {
   text-align: center
 }
