@@ -9,6 +9,7 @@ body {
 
 
 .banner {
+  align-items: flex-end;
   background-color: #303030;
   border-bottom: 2px solid grey;
   /*
@@ -16,20 +17,30 @@ body {
   margin-bottom: 20px;
   */
   color: white;
+  display: flex;
+  justify-content: space-between;
   padding: 10px;
 }
+.banner > div {
+    display: flex;
+    flex-direction: column;
+}
+.banner .titles {
+  align-items: flex-start;
+}
 .banner .title {
-  color: orange;/*#F8C471;*/
-  font-size: 200%;
-  font-stretch: ultra-expanded;
-  font-weight: bolder;
+    color: orange;
+    font-size: 200%;
+    font-stretch: ultra-expanded;
+    font-weight: bolder;
 }
-.banner .link a {
+.banner .links {
+    align-items: flex-end;
+}
+.banner .links a {
     color: #4FC3F7;
-    float: right;
-    text-align: right;
 }
-.banner .link a:hover {
+.banner .links a:hover {
   color: cyan;
 }
 
