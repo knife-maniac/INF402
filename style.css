@@ -165,7 +165,8 @@ body {
     color: white;
 }
 #puzzle .cell.constraint:hover {
-    background-color: #daaeff;
+    background-color: #e6def7;
+    color: #7b51d3;
 }
 #puzzle .cell:hover {
     background-color: #ffffff;
@@ -178,15 +179,16 @@ body {
     background-color: #eee;
 }
 #puzzle .operator.constraint {
-    background-color: orange;
+    background-color: #eb9800;
     color: white;
 }
 #puzzle .operator.constraint:hover {
-    background-color: #ffdb96;
+    background-color: #fff1d8;
+    color : #eb9800;
 }
 #solution .operator {
     background-color: #303030;
-    color: pink;
+    color: white;
 }
 
 .grid .operator.vertical span {
