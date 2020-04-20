@@ -15,21 +15,25 @@
         }
         table {
             border-collapse: collapse;
-            margin:auto;
+            margin: auto;
+            width: 80%;
         }
-        tr:nth-child(odd) {
+        tr.test:nth-child(even) {
             background-color: #eeeeee;
         }
         td {
             padding: 10px;
             vertical-align: top;
         }
-        span {
-            color:green;
-        }
         td.code {
             white-space:pre;
             font-family: monospace;
+        }
+        span.done {
+            color:green;
+        }
+        span.error {
+            color:red;
         }
     </style>
 
@@ -87,21 +91,26 @@
                 return result;
             }
 
-            function test(title, rpl, has_solution) {
+            function integration_test(title, rpl, has_solution) {
                 let success = false;
-                const puzzle = run(rpl);
-                if (puzzle.solution_as_array.length) {
-                    if (solution_is_valid(puzzle.solution_as_array) && solution_respects_constraints(puzzle.solution_as_array,rpl)) {
-                        success = true;
+                let puzzle;
+                try {
+                    puzzle = run(rpl);
+                    if (puzzle.solution_as_array.length) {
+                        if (solution_is_valid(puzzle.solution_as_array) && solution_respects_constraints(puzzle.solution_as_array,rpl)) {
+                            success = true;
+                        }
+                    } else {
+                        success = !has_solution;
                     }
-                } else {
-                    success = !has_solution;
+                } catch (e) {
+
                 }
                 return {puzzle,success};
             }
 
 
-            const tests = [
+            const integration_tests = [
                 ['one value', 'A1\n',true],
                 ['three values', 'A1\nB2\nD4\n',true],
                 ['three values + one inferior sign', 'A1\nB2\nD4\nK<O\n',true],
@@ -112,16 +121,17 @@
                 ['two impossible values same column', 'A4\nM4\n',false]
             ];
 
-            const $table = $('table');
-            tests.map(test_case=>{
+            const $table = $('table.integration_tests');
+            integration_tests.map(test_case=>{
                 const [title, rpl, has_solution] = test_case;
-                const result = test(...test_case);
+                const result = integration_test(...test_case);
+                const outcome = result.success ? 'done': 'error';
                 $table.append(`
-<tr>
-    <td><span class="material-icons">${result.success ? 'done':'error'}</span></td>
+<tr class="test">
+    <td><span class="material-icons ${outcome}">${outcome}</span></td>
     <td>${title}</td>
     <td class="code">${rpl.replace(/</g,'&lt;')}</td>
-    <td class="code">${result.puzzle.solution_as_array.map(r=>r.join(' ')).join('\n')}</td>
+    <td class="code">${result.success ? result.puzzle.solution_as_array.map(r=>r.join(' ')).join('\n'):''}</td>
 </tr>`);
             });
 
@@ -130,7 +140,19 @@
     </script>
 </head>
 <body>
-<table>
+<table class="unit_tests">
+    <tr>
+        <th colspan="4" style=" text-align: left; border-bottom: 2px solid blue; color: blue">
+            Tests unitaires
+        </th>
+    </tr><tr><td style="font-size: xx-small; padding: 0">&nbsp;</td></tr>
+</table>
 
+<table class="integration_tests" style="margin-top: 30px">
+    <tr>
+        <th colspan="4" style=" text-align: left; border-bottom: 2px solid blue; color: blue">
+            Tests d'intégration
+        </th>
+    </tr><tr><td style="font-size: xx-small; padding: 0">&nbsp;</td></tr>
 </table>
 </body>
