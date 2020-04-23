@@ -23,7 +23,7 @@ jobs:
 
 
     - name: Unit tests
-      run: echo TODO unit tests $HOME
+      run: npm test
 
     - name: Integration tests
       run: echo TODO integration tests
