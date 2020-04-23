@@ -1,0 +1,7 @@
+{
+  "name": "INF402",
+  "version": "1.0.0",
+  "dependencies": {
+    "mocha": "^7.1.1"
+  }
+}

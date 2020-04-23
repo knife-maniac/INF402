@@ -2,6 +2,8 @@
   <dictionary name="ruben">
     <words>
       <w>dimacs</w>
+      <w>futoshiki</w>
+      <w>minisat</w>
     </words>
   </dictionary>
 </component>

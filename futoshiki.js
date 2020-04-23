@@ -1,34 +1,10 @@
 // Project INF402
 
-const SQUARES = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P'];
-
-
-function solve(problem_as_dimacs) {
-    var solve_string = Module.cwrap('solve_string', 'string', ['string', 'int']);
-    var oldPrint = Module.print;
-    var oldPrintErr = Module.printErr;
-    let result='';
-    Module['print'] = function(x) {
-        result+='***:'+x;
-        alert(x);
-    }
-    Module['printErr'] = function(err) {
-        result+='ERR:'+err;
-        alert(err);
-    }
-    try {
-        //var startTime = (new Date()).getTime();
-        result += solve_string(problem_as_dimacs, problem_as_dimacs.length);
-        //var endTime = (new Date()).getTime();
-        //outputElem.value += 'CPU time: ' + ((endTime - startTime) / 1000) + 's\n';
-    } catch(e) {
-        Module.printErr('Error: ' + e);
-    }
-    Module.print = oldPrint;
-    Module.printErr = oldPrintErr;
-
-    return result;
+if (typeof module !== 'undefined') {
+    global.minisat = require('./lib/minisat.js');
 }
+
+const SQUARES = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P'];
 
 
 function giveAllSquaresOnTheSameLineOrColumn(literal) {
@@ -207,7 +183,7 @@ function dimacs2pretty(dimacs) {
 function run(rpl) {
     const fnc = rpl2fnc(rpl);
     const puzzle_as_dimacs = fnc2dimacs(fnc);
-    const solution_as_dimacs = solve(puzzle_as_dimacs);
+    const solution_as_dimacs = minisat.solve(puzzle_as_dimacs);
     const solution_as_array = dimacs2pretty(solution_as_dimacs);
     return {
         rpl,
@@ -217,3 +193,11 @@ function run(rpl) {
         solution_as_array
     };
 }
+
+
+
+const futoshiki = {
+    literal2int,
+    run
+};
+if (typeof module !== 'undefined') module.exports = futoshiki;
