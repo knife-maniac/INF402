@@ -92,7 +92,7 @@ function generateGameRules() {
 }
 
 
-function addClause(list, clause_as_rpl) {
+function addClauseAndReturnNumberOfLiteralsOfRpl(list, clause_as_rpl) {
     const literals = clause_as_rpl.split(' ');
     let clause_as_dimacs = [];
     for (const literal of literals) {
@@ -143,7 +143,7 @@ function fnc2dimacs(fnc) {
     }
 
     for (let clause of fnc) {
-        numberOfClauses += addClause(dimacs,clause);
+        numberOfClauses += addClauseAndReturnNumberOfLiteralsOfRpl(dimacs,clause);
     }
     dimacs.splice(0,0,'p cnf 64 ' + numberOfClauses);
 
@@ -198,6 +198,8 @@ function run(rpl) {
 
 const futoshiki = {
     literal2int,
+    int2literal,
+    addClauseAndReturnNumberOfLiteralsOfRpl,
     run
 };
 if (typeof module !== 'undefined') module.exports = futoshiki;
