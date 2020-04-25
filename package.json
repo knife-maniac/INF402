@@ -1,19 +1,16 @@
 {
   "name": "INF402",
   "version": "1.0.0",
-  "dependencies": {
-  },
-
+  "dependencies": {},
   "devDependencies": {
     "mocha": "^7.1.1",
+    "mochawesome": "^6.1.0",
     "nyc": "^15.0.1"
   },
-
   "scripts": {
-    "test": "mocha *.test.js",
+    "test": "mocha *.test.js --reporter mochawesome",
     "coverage": "nyc --check-coverage --reporter=html npm run test"
   },
-
   "nyc": {
     "branches": 100,
     "lines": 100,
