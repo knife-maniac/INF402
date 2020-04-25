@@ -56,9 +56,12 @@ describe('integration tests', function() {
 
 
     const INTEGRATION_TESTS = [
+        ['no value no \\n', '',true],
+        ['no value with \\n', '\n',true],
         ['one value', 'A1\n',true],
         ['three values', 'A1\nB2\nD4\n',true],
         ['three values + one inferior sign', 'A1\nB2\nD4\nK<O\n',true],
+        ['three values + one superior sign', 'A1\nB2\nD4\nK>O\n',true],
 
         ['two impossible values same square', 'A1\nA2\n',false],
         ['two impossible values same line adjacent', 'A1\nB1\n',false],

@@ -1,5 +1,6 @@
 // Project INF402
 
+/* istanbul ignore else */
 if (typeof module !== 'undefined') {
     global.minisat = require('./lib/minisat.js');
 }
@@ -204,4 +205,5 @@ const futoshiki = {
     addClauseAndReturnNumberOfLiteralsOfRpl,
     run
 };
+/* istanbul ignore else */
 if (typeof module !== 'undefined') module.exports = futoshiki;
