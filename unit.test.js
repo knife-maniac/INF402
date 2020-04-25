@@ -6,7 +6,7 @@ describe('unit tests', function() {
     const CORRESPONDENCE_BETWEEN_LITERALS_AND_INT = [
         ['A1', 1],
         ['B3', 7],
-        ['P4', 64]
+        ['P4', 63]//64
     ];
     describe('literal2int() and int2literal()', function() {
         CORRESPONDENCE_BETWEEN_LITERALS_AND_INT.map(function([literal,int]) {
