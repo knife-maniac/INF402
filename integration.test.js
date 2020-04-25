@@ -69,6 +69,7 @@ describe('integration tests', function() {
         ['two impossible values same column', 'A4\nM4\n',false]
     ];
 
+
     INTEGRATION_TESTS.map(function([name,rpl,has_solution]) {
         it(`must ${has_solution ? 'succeed':'fail'} with ${name}`, function() {
             let success = false;

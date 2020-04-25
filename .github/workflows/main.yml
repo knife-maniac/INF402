@@ -35,11 +35,8 @@ jobs:
     - name: Install all dependencies
       run: npm install
 
-    - name: Run all tests
-      run: npm test
-
-    - name: Ensure 100% coverage
-      run: echo TODO coverage
+    - name: Run all tests and ensure 100% coverage
+      run: npm run coverage
 
     - name: Deploy on ruben-quast.fr
       uses: sebastianpopp/ftp-action@releases/v2

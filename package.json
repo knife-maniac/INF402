@@ -3,12 +3,21 @@
   "version": "1.0.0",
   "dependencies": {
   },
-  "scripts": {
-    "test": "mocha *.test.js",
-    "coverage": "nyc --reporter=html npm run test"
-  },
+
   "devDependencies": {
     "mocha": "^7.1.1",
     "nyc": "^15.0.1"
+  },
+
+  "scripts": {
+    "test": "mocha *.test.js",
+    "coverage": "nyc --check-coverage --reporter=html npm run test"
+  },
+
+  "nyc": {
+    "branches": 100,
+    "lines": 100,
+    "functions": 100,
+    "statements": 100
   }
 }
