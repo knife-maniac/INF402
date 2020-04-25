@@ -21,6 +21,7 @@ describe('unit tests', function() {
         it('must return length of 3 when adding 3 elements', function() {
             assert(futoshiki.addClauseAndReturnNumberOfLiteralsOfRpl(rpl,'A1 B3 D2\n')===3);
         });
-
     });
+
+    //TODO : Unit tests for rpl2fnc, fnc2dimacs, dimacs2pretty, run
 });
