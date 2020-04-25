@@ -197,6 +197,8 @@ function run(rpl) {
 
 
 const futoshiki = {
+    SQUARES,
+
     literal2int,
     int2literal,
     addClauseAndReturnNumberOfLiteralsOfRpl,

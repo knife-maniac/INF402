@@ -35,14 +35,8 @@ jobs:
     - name: Install all dependencies
       run: npm install
 
-    - name: Run unit tests
+    - name: Run all tests
       run: npm test
-
-    - name: Integration tests
-      run: echo TODO integration tests
-
-    - name: Web interface tests
-      run: echo TODO web tests
 
     - name: Ensure 100% coverage
       run: echo TODO coverage
