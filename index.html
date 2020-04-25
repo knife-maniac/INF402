@@ -17,6 +17,10 @@
         const CELL_VALUES = [BLANK,'1','2','3','4'];
         const OPERATOR_VALUES = [BLANK,'&lt;','&gt;'];
 
+        const X = {
+            is_busy: true
+        };
+
 
         $$(function() {
             function initialize() {
@@ -127,6 +131,8 @@
 			    reset_puzzle();
                 //$$('#help').show();;
 			});
+
+            X.is_busy = false;
         });
     </script>
 </head>
