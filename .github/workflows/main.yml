@@ -29,8 +29,8 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
 
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-    - uses: actions/checkout@v2
+    - name: Clone git repository under $GITHUB_WORKSPACE
+      uses: actions/checkout@v2
 
     - name: Install all dependencies
       run: npm install
@@ -45,6 +45,6 @@ jobs:
         user: ${{ secrets.FTP_USERNAME }}
         password: ${{ secrets.FTP_PASSWORD }}
         localDir: "."
-        remoteDir: "/public/www/uga/inf402"
+        remoteDir: "/public/www/uga/inf403"
 
 
