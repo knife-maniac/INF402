@@ -250,8 +250,6 @@ body.eighties {
     padding: 50px;
 }
 .eighties .container {
-    background-color: #303030;
-    border: 1px solid #101010;
     grid-column: span 3;
 }
 .eighties .button {
