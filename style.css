@@ -49,7 +49,6 @@ body {
   display: grid;
   grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr;
   grid-gap: 5px;
-  margin: 10px;
 }
 
 
@@ -57,12 +56,20 @@ body {
     grid-column: span 3;
 }
 
-
-
 .button {
   cursor: pointer;
   display: block;
   text-align: center;
+}
+
+.space.horizontal {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.space.vertical {
+    padding-bottom: 5px;
+    padding-top: 5px;
 }
 
 .space {
@@ -125,19 +132,20 @@ body {
 
 
 
-/*   */
-/*   */
 
-
-body {
+/* MODERN MODE */
+body.modern {
     background-color: #606060;
 }
-.container {
+.modern #game {
+    margin: 10px;
+}
+.modern .container {
     background-color: #303030;
     border: 1px solid #101010;
     grid-column: span 3;
 }
-.button {
+.modern .button {
     background-color: #999999;
     border-radius: 7px;
     color: black;
@@ -145,35 +153,25 @@ body {
     line-height: 35px;
     margin-bottom: 10px;
 }
-.button:hover {
+.modern .button:hover {
     background-color: red;
     color: white;
 }
-.button:active {
+.modern .button:active {
     background-color: pink;
 }
 
-.space.horizontal {
-    padding-left: 5px;
-    padding-right: 5px;
-}
-.space.vertical {
-    padding-bottom: 5px;
-    padding-top: 5px;
-}
-
-.path {
+.modern .path {
     color: #999999;
 }
 
 
-.step {
+.modern .step {
     background-color: #303030;
     border: 1px solid #101010;
 }
 
-
-.container .title, .step .title {
+.modern .container .title, .modern .step .title {
     background-color: #101010;
     color: #F8C471;
     font-weight: bold;
@@ -181,64 +179,160 @@ body {
     padding: 2px;
 }
 
-.step .code {
+.modern .step .code {
     color: #F8C471;
     padding: 8px;
 }
 
-
-#puzzle-container .title, #rpl .title, #rpl .code {
+.modern #puzzle-container .title, .modern #rpl .title, .modern #rpl .code {
     color: #D5F5E3;
 }
 
-#fnc .title, #fnc .code {
+.modern #fnc .title, .modern #fnc .code {
     color: #C5E1A5;
 }
 
-#dimacs-puzzle .title, #dimacs-puzzle .code {
+.modern #dimacs-puzzle .title, .modern #dimacs-puzzle .code {
     color: #FFF59D;
 }
 
 
-.grid {
+.modern .grid {
     margin: 20px;
 }
 
 
-.grid .cell {
+.modern .grid .cell {
     background-color: #999;
 }
-#puzzle .cell.constraint {
+.modern #puzzle .cell.constraint {
     background-color: mediumpurple;
     color: white;
 }
-#puzzle .cell.constraint:hover {
+.modern #puzzle .cell.constraint:hover {
     background-color: #e6def7;
     color: #7b51d3;
 }
-#puzzle .cell:hover {
+.modern #puzzle .cell:hover {
     background-color: #ffffff;
 }
 
-.grid .operator {
+.modern .grid .operator {
     background-color: #777;
 }
-#puzzle .operator:hover {
+.modern #puzzle .operator:hover {
     background-color: #eee;
 }
-#puzzle .operator.constraint {
+.modern #puzzle .operator.constraint {
     background-color: #eb9800;
     color: white;
 }
-#puzzle .operator.constraint:hover {
+.modern #puzzle .operator.constraint:hover {
     background-color: #fff1d8;
     color : #eb9800;
 }
-#solution .operator {
+.modern #solution .operator {
     background-color: #303030;
     color: white;
 }
 
 
-/*   */
-/*   */
+
+/* 80's MODE */
+body.eighties {
+    background-color: lavender;
+}
+.eighties #game {
+    background: linear-gradient(0, #1c1c1c, #313131);
+    border-radius: 20px;
+    box-shadow: 10px 10px 20px 10px rgba(0,0,0,.5);
+    margin: 50px;
+    padding: 50px;
+}
+.eighties .container {
+    background-color: #303030;
+    border: 1px solid #101010;
+    grid-column: span 3;
+}
+.eighties .button {
+    background: linear-gradient(135deg, #ffb935, #ffa70c);
+    border: 5px outset #ffb935;
+    font-size: 3.8vw;
+    color: black;
+    margin: 5px 20px 20px 16px;
+    padding: 0 30px;
+}
+.eighties .button:hover {
+    background: linear-gradient(135deg, #ef9915, #efa70c);
+    border-color: #ef9915;
+}
+.eighties .button:active {
+    border-color: #efa70c;
+    border-style: inset;
+}
+
+.eighties .step {
+    background-color: #303030;
+    border: 1px solid #101010;
+}
+
+.eighties #puzzle .cell, .eighties #puzzle .operator {
+    color: white;
+    font-size: 3vw;
+}
+.eighties #puzzle .cell {
+    background: linear-gradient(135deg, #ff7296, #ff4561);
+    border: 5px outset #ff7296;
+}
+.eighties #puzzle .cell:hover {
+    background: linear-gradient(135deg, #df4561, #df1541);
+    border-color: #df1541;
+}
+
+.eighties #puzzle .operator {
+    background: linear-gradient(135deg, #313131, #1c1c1c);
+    border: 5px outset #414141;
+}
+.eighties #puzzle .operator:hover {
+    background: linear-gradient(135deg, #1c1c1c, black);
+    border-color: #2c2c2c;
+}
+
+@font-face {
+    font-family: 'lcd';
+    src: url("Digital7-1e1Z.ttf") format('truetype');
+}
+
+.eighties #solution-container {
+    background-color: #bbb;
+    border: 2px outset #ddd;
+    color: white;
+}
+
+.eighties #solution {
+    background: linear-gradient(0, #bccd95, #7d8c73);
+    border: 2px inset #ddd;
+    box-shadow: inset 0 0 30px black;
+    margin: 50px;
+}
+.eighties #solution > div {
+    color: black;
+    font-family: 'lcd';
+    font-size: 4.3vw;
+    margin: 0;
+    text-shadow: 0 0 6px #7d8c73;
+}
+
+.eighties #solution .operator {
+    color: #555;
+}
+
+
+.eighties .path,
+.eighties .step,
+.eighties .big.space,
+.eighties .vertical.space,
+.eighties .container .title {
+    display: none;
+}
+
