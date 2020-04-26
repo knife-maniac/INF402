@@ -32,17 +32,14 @@ jobs:
     - name: Clone git repository under $GITHUB_WORKSPACE
       uses: actions/checkout@v2
 
-    #- name: Install all dependencies
-    #  run: npm install
+    - name: Install all dependencies
+      run: npm install
 
-    #- name: Run all tests and ensure 100% coverage
-    #  run: npm run cd-coverage
+    - name: Run all tests and ensure 100% coverage
+      run: npm run cd-coverage
 
-    - name: Remove node_modules
-      run: rm -rf nodes_modules
-
-    - name: Create file in current directory
-      run: touch Hello.txt
+    - name: Clean up working directory
+      run: rm -rf node_modules .github .idea .nyc_output resource .gitignore package*.json *.test.js
 
     - name: Deploy on ruben-quast.fr
       uses: sebastianpopp/ftp-action@releases/v2
