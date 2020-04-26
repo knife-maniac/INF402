@@ -36,7 +36,7 @@ jobs:
       run: npm install
 
     - name: Run all tests and ensure 100% coverage
-      run: npm run coverage
+      run: npm run cd-coverage
 
     - name: Remove node_modules
       run: rm -rf nodes_modules
