@@ -11,7 +11,7 @@
     <script type="application/javascript" src="futoshiki.js"></script>
 
     <script type="application/javascript">
-	    const $$=jQuery;
+        const $$=jQuery;
 
         const BLANK='&nbsp;';
         const CELL_VALUES = [BLANK,'1','2','3','4'];
@@ -24,9 +24,9 @@
 
         $$(function() {
             function initialize() {
-			    function set_constraint_if_not_blank($element,value) {
-					$element[value==BLANK?'removeClass':'addClass']('constraint');
-				}
+                function set_constraint_if_not_blank($element,value) {
+                    $element[value==BLANK?'removeClass':'addClass']('constraint');
+                }
                 const $template_cells=$$('#grid-template > div');
                 $template_cells.appendTo('#puzzle');
                 $template_cells.clone().appendTo('#solution');
@@ -35,9 +35,9 @@
                 $puzzle_cells.mousedown(function(event) {
                     const $target = $$(event.target);
                     const index = CELL_VALUES.indexOf($target.html());
-					const new_value=CELL_VALUES[(index+1)%5];
+                    const new_value=CELL_VALUES[(index+1)%5];
                     $target.html(new_value);
-					set_constraint_if_not_blank($target,new_value);
+                    set_constraint_if_not_blank($target,new_value);
                     reset_steps_and_solution();
                 });
 
@@ -45,9 +45,9 @@
                 $puzzle_operators.mousedown(function(event) {
                     let $target = $$(this);
                     const index = OPERATOR_VALUES.indexOf($target.children('span').html());
-					const new_value = OPERATOR_VALUES[(index+1)%3];
+                    const new_value = OPERATOR_VALUES[(index+1)%3];
                     $target.html('<span>'+new_value+'</span>');
-					set_constraint_if_not_blank($target,new_value);
+                    set_constraint_if_not_blank($target,new_value);
                     reset_steps_and_solution();
                 });
 
@@ -55,20 +55,20 @@
             }
 
             function reset_grid(id) {
-			    const $grid=$$(id);
+                const $grid=$$(id);
                 const $cells = $grid.find('.cell');
                 $cells.html(CELL_VALUES[0]);
                 const $operators = $grid.find('.operator');
                 $operators.html('<span>'+OPERATOR_VALUES[0]+'</span>');
-			    $grid.children().removeClass('constraint');
+                $grid.children().removeClass('constraint');
             }
             function reset_puzzle() {
-			    reset_grid('#puzzle');
-				reset_steps_and_solution();
+                reset_grid('#puzzle');
+                reset_steps_and_solution();
             }
             function reset_steps_and_solution() {
                 $$('.step .code').empty();
-			    reset_grid('#solution');
+                reset_grid('#solution');
                 $$('#solution-container > .message').hide();
             }
 
@@ -94,14 +94,14 @@
                         rpl = rpl + squares.join(value_as_text) + '\n';
                     }
                 });
-				return rpl;
+                return rpl;
             }
 
             function set_step(name,content) {
                 $$(`#${name} .code`).text(content);
-			}
+            }
 
-			function update_solution_grid(solution) {
+            function update_solution_grid(solution) {
                 const $solution = $$('#solution');
                 $solution.find('.cell').map(function(i,cell) {
                     $$(cell).text(solution[i]);
@@ -128,9 +128,9 @@
             });
 
             $$('#reset.button').click(function() {
-			    reset_puzzle();
+                reset_puzzle();
                 //$$('#help').show();;
-			});
+            });
 
             X.is_busy = false;
         });
@@ -174,7 +174,7 @@
         <div class="title">Modélisation du puzzle</div>
         <div class="code"></div>
     </div>
-    <div class="horizontal space"><span class="material-icons path">arrow_forward</span></div>
+    <div class="horizontal space material-icons path">arrow_forward</div>
     <div id="fnc" class="step">
         <div class="title">Forme Normale Conjonctive</div>
         <div class="code"></div>
