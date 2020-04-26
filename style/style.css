@@ -249,13 +249,17 @@ body.modern {
 
 
 /* 80's MODE */
+
+
+
 body.eighties {
+    background-image: url('80s_background.jpg');
     background-color: lavender;
 }
 .eighties #game {
     background: linear-gradient(0, #1c1c1c, #313131);
     border-radius: 20px;
-    box-shadow: 10px 10px 20px 10px rgba(0,0,0,.5);
+    box-shadow: 20px 20px 30px 20px rgba(0,0,0,.7);
     margin: 50px;
     padding: 50px;
 }
