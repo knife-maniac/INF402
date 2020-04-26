@@ -62,6 +62,16 @@ body {
   text-align: center;
 }
 
+.banner .button {
+    color: #4FC3F7;
+    display: inline-block;
+
+}
+
+.banner .button:hover {
+    color: cyan;
+}
+
 .space.horizontal {
     padding-left: 5px;
     padding-right: 5px;
@@ -145,7 +155,7 @@ body.modern {
     border: 1px solid #101010;
     grid-column: span 3;
 }
-.modern .button {
+.modern #game .button {
     background-color: #999999;
     border-radius: 7px;
     color: black;
@@ -153,11 +163,11 @@ body.modern {
     line-height: 35px;
     margin-bottom: 10px;
 }
-.modern .button:hover {
+.modern #game .button:hover {
     background-color: red;
     color: white;
 }
-.modern .button:active {
+.modern #game .button:active {
     background-color: pink;
 }
 
@@ -252,7 +262,7 @@ body.eighties {
 .eighties .container {
     grid-column: span 3;
 }
-.eighties .button {
+.eighties #game .button {
     background: linear-gradient(135deg, #ffb935, #ffa70c);
     border: 5px outset #ffb935;
     font-size: 3.8vw;
@@ -260,11 +270,11 @@ body.eighties {
     margin: 5px 20px 20px 16px;
     padding: 0 30px;
 }
-.eighties .button:hover {
+.eighties #game .button:hover {
     background: linear-gradient(135deg, #ef9915, #efa70c);
     border-color: #ef9915;
 }
-.eighties .button:active {
+.eighties #game .button:active {
     border-color: #efa70c;
     border-style: inset;
 }
@@ -276,11 +286,12 @@ body.eighties {
 
 .eighties #puzzle .cell, .eighties #puzzle .operator {
     color: white;
-    font-size: 3vw;
+    font-size: 2.5vw;
 }
 .eighties #puzzle .cell {
     background: linear-gradient(135deg, #ff7296, #ff4561);
     border: 5px outset #ff7296;
+    padding: 0px;
 }
 .eighties #puzzle .cell:hover {
     background: linear-gradient(135deg, #df4561, #df1541);
@@ -316,7 +327,7 @@ body.eighties {
 .eighties #solution > div {
     color: black;
     font-family: 'lcd';
-    font-size: 4.3vw;
+    font-size: 3.9vw;
     margin: 0;
     text-shadow: 0 0 6px #7d8c73;
 }

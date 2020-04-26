@@ -113,6 +113,19 @@
 
             initialize();
 
+
+            $$('#switch_to_eighties_mode.button').click(function() {
+                const $body = $$('body');
+                $body.removeClass("modern");
+                $body.addClass("eighties");
+            });
+
+            $$('#switch_to_modern_mode.button').click(function() {
+                const $body = $$('body');
+                $body.removeClass("eighties");
+                $body.addClass("modern");
+            });
+
             $$('#run.button').click(function() {
                 const rpl=get_rpl_from_grid();
                 const result = run(rpl);
@@ -141,8 +154,15 @@
 <div class="banner">
     <div class="titles">
         <span class="title">Projet INF402</span>
-        <span class="subtitle">Ruben QUAST</span>
+        <span class="mode_selectors">
+            <div id="switch_to_eighties_mode" class="button">80's</div>
+            <span>|</span>
+            <div id="switch_to_modern_mode" class="button">modern</div>
+        </span>
     </div>
+
+
+
     <div class="links">
         <a href="https://github.com/knife-maniac/INF402.git">code source sur github</a>
         <a href="mochawesome-report/mochawesome.html">résultats des tests</a>
