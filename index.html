@@ -114,16 +114,12 @@
             initialize();
 
 
-            $$('#switch_to_eighties_mode.button').click(function() {
+            $$('.switch-mode.button').click(function() {
+                const id = this.id;
+                const mode = id.slice(5);
                 const $body = $$('body');
-                $body.removeClass("modern");
-                $body.addClass("eighties");
-            });
-
-            $$('#switch_to_modern_mode.button').click(function() {
-                const $body = $$('body');
-                $body.removeClass("eighties");
-                $body.addClass("modern");
+                $body.removeClass();
+                $body.addClass(mode);
             });
 
             $$('#run.button').click(function() {
@@ -155,9 +151,9 @@
     <div class="titles">
         <span class="title">Projet INF402</span>
         <span class="mode_selectors">
-            <div id="switch_to_eighties_mode" class="button">80's</div>
+            <div id="mode_eighties" class="switch-mode button">80's</div>
             <span>|</span>
-            <div id="switch_to_modern_mode" class="button">modern</div>
+            <div id="mode_modern" class="switch-mode button">modern</div>
         </span>
     </div>
 
