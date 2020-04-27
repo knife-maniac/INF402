@@ -3,6 +3,7 @@ body {
   margin: 0;
   padding: 0;
   user-select: none;
+  --seventies-text-color: #BB0000;/*#f20;*/
 }
 
 
@@ -340,20 +341,6 @@ body.calculator {
 }
 
 
-/* 70's MODE */
-
-.seventies #solution {
-    background: linear-gradient(0, black, black);
-}
-.seventies #solution > div {
-    color: red;
-    text-shadow: 0 0 6px red;
-}
-
-.seventies #solution .operator {
-    color: red;
-}
-
 
 /* 80's MODE */
 
@@ -370,3 +357,34 @@ body.calculator {
     color: #555;
 }
 
+
+
+
+/* 70's MODE */
+
+.seventies #solution {
+    background: linear-gradient(0, black, black);
+}
+.seventies #solution > div {
+    animation: flicker 2.5s infinite alternate;
+    color: var(--seventies-text-color);
+}
+
+@keyframes flicker {
+    0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+        text-shadow:
+                -0.2rem -0.2rem 1rem red,
+                0.2rem 0.2rem 1rem red,
+                0 0 2rem var(--seventies-text-color),
+                0 0 4rem var(--seventies-text-color),
+                0 0 6rem var(--seventies-text-color),
+                0 0 8rem var(--seventies-text-color),
+                0 0 10rem var(--seventies-text-color);
+        color: var(--seventies-text-color);
+    }
+    20%, 24%, 55% {
+        text-shadow: none;
+        box-shadow: none;
+        color: #550000;
+    }
+}
