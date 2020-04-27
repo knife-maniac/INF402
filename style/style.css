@@ -248,15 +248,12 @@ body.modern {
 
 
 
-/* 80's MODE */
+/* CALCULATOR MODE */
 
-
-
-body.eighties {
-    background-image: url('80s_background.jpg');
-    background-color: lavender;
+body.calculator {
+    background-image: url('wood_background.jpg');
 }
-.eighties #game {
+.calculator #game {
     background: linear-gradient(0, #1c1c1c, #313131);
     border-radius: 20px;
     box-shadow: 20px 20px 30px 20px rgba(0,0,0,.7);
@@ -264,10 +261,10 @@ body.eighties {
     /* transform: rotate(-2deg); */
     padding: 50px;
 }
-.eighties .container {
+.calculator .container {
     grid-column: span 3;
 }
-.eighties #game .button {
+.calculator #game .button {
     background: linear-gradient(135deg, #ffb935, #ffa70c);
     border: 5px outset #ffb935;
     font-size: 3.8vw;
@@ -275,39 +272,39 @@ body.eighties {
     margin: 5px 20px 20px 16px;
     padding: 0 30px;
 }
-.eighties #game .button:hover {
+.calculator #game .button:hover {
     background: linear-gradient(135deg, #ef9915, #efa70c);
     border-color: #ef9915;
 }
-.eighties #game .button:active {
+.calculator #game .button:active {
     border-color: #efa70c;
     border-style: inset;
 }
 
-.eighties .step {
+.calculator .step {
     background-color: #303030;
     border: 1px solid #101010;
 }
 
-.eighties #puzzle .cell, .eighties #puzzle .operator {
+.calculator #puzzle .cell, .calculator #puzzle .operator {
     color: white;
     font-size: 2.5vw;
 }
-.eighties #puzzle .cell {
+.calculator #puzzle .cell {
     background: linear-gradient(135deg, #ff7296, #ff4561);
     border: 5px outset #ff7296;
     padding: 0px;
 }
-.eighties #puzzle .cell:hover {
+.calculator #puzzle .cell:hover {
     background: linear-gradient(135deg, #df4561, #df1541);
     border-color: #df1541;
 }
 
-.eighties #puzzle .operator {
+.calculator #puzzle .operator {
     background: linear-gradient(135deg, #313131, #1c1c1c);
     border: 5px outset #414141;
 }
-.eighties #puzzle .operator:hover {
+.calculator #puzzle .operator:hover {
     background: linear-gradient(135deg, #1c1c1c, black);
     border-color: #2c2c2c;
 }
@@ -317,36 +314,59 @@ body.eighties {
     src: url("Digital7-1e1Z.ttf") format('truetype');
 }
 
-.eighties #solution-container {
+.calculator #solution-container {
     background-color: #bbb;
     border: 2px outset #ddd;
     color: white;
 }
 
-.eighties #solution {
-    background: linear-gradient(0, #bccd95, #7d8c73);
+.calculator #solution {
     border: 2px inset #ddd;
-    box-shadow: inset 0 0 30px black;
     margin: 50px;
 }
-.eighties #solution > div {
-    color: black;
+.calculator #solution > div {
     font-family: 'lcd';
     font-size: 3.9vw;
     margin: 0;
-    text-shadow: 0 0 6px #7d8c73;
+}
+
+
+.calculator .path,
+.calculator .step,
+.calculator .big.space,
+.calculator .vertical.space,
+.calculator .container .title {
+    display: none;
+}
+
+
+/* 70's MODE */
+
+.seventies #solution {
+    background: linear-gradient(0, black, black);
+}
+.seventies #solution > div {
+    color: red;
+    text-shadow: 0 0 6px red;
+}
+
+.seventies #solution .operator {
+    color: red;
+}
+
+
+/* 80's MODE */
+
+.eighties #solution {
+    background: linear-gradient(0, #bccd95, #7d8c73);
+    box-shadow: inset 0 0 30px black;
+}
+.eighties #solution > div {
+    color: black;
+    text-shadow: 0 0 15px #7d8c73;
 }
 
 .eighties #solution .operator {
     color: #555;
-}
-
-
-.eighties .path,
-.eighties .step,
-.eighties .big.space,
-.eighties .vertical.space,
-.eighties .container .title {
-    display: none;
 }
 
