@@ -294,7 +294,6 @@ body.calculator {
 
 .calculator #puzzle .cell, .calculator #puzzle .operator {
     color: white;
-    font-size: 2.5vw;
 }
 
 .calculator #puzzle .cell {
@@ -363,7 +362,7 @@ body.calculator {
 .eighties #puzzle .cell {
     background: linear-gradient(135deg, #ff7296, #ff4561);
     border: 5px outset #ff7296;
-    padding: 0px;
+    font-size: 2.3vw;
 }
 
 .eighties #puzzle .cell:hover {
@@ -419,10 +418,15 @@ body.calculator {
     border-color: grey;
 }
 
+.seventies #puzzle.grid > div {
+    margin: 7px;
+}
+
 .seventies #puzzle .cell {
     background: linear-gradient(135deg, #72c3ff, #454bff);
     border: 8px outset #5678cc;
     border-radius: 30px;
+    font-size: 2.5vw;
 }
 
 .seventies #puzzle .cell:hover {
