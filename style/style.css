@@ -33,6 +33,7 @@ body {
 
 .banner .title {
     color: orange;
+    font-family: 'lcd';
     font-size: 200%;
     font-stretch: ultra-expanded;
     margin-bottom: 5px;
