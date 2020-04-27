@@ -113,8 +113,9 @@
 
             initialize();
 
+            const $all_mode_buttons = $$('.switch-mode.button');
 
-            $$('.switch-mode.button').click(function() {
+            $all_mode_buttons.click(function() {
                 const id = this.id;
                 const modes = id.slice(5);
                 const $body = $$('body');
@@ -122,6 +123,10 @@
                 for (const mode of modes.split('-')) {
                     $body.addClass(mode);
                 }
+
+                $all_mode_buttons.removeClass('active');
+                const $this = $$(this);
+                $this.addClass('active');
             });
 
             $$('#run.button').click(function() {
@@ -153,7 +158,7 @@
     <div class="titles">
         <span class="title">Projet INF402</span>
         <span class="mode_selectors">
-            <div id="mode_modern" class="switch-mode button">2020</div>
+            <div id="mode_modern" class="switch-mode button active">2020</div>
             <span>|</span>
             <div id="mode_eighties-calculator" class="switch-mode button">1980</div>
             <span>|</span>
@@ -183,7 +188,10 @@
 
     <div id="solution-container" class="container">
         <div class="title">SOLUTION</div>
-        <div id="solution" class="grid"></div>
+        <div class="screen-frame">
+            <div id="solution" class="grid"></div>
+        </div>
+
     </div>
 
     <div class="vertical space"><span class="material-icons path" style="transform:rotate(90deg)">arrow_forward</span></div>
