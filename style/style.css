@@ -354,9 +354,10 @@ body.calculator {
 
 /* 80's MODE */
 .eighties #game {
-    background: linear-gradient(0, #1c1c1c, #313131);
-    border-style: solid;
-    border-color: #1c1c1c;
+    background-image: url('brushed_aluminum.jpg');
+    background-repeat: round;
+    border-color: grey;
+    border-style: outset;
 }
 
 .eighties #puzzle .cell {
@@ -412,10 +413,9 @@ body.calculator {
 /* 70's MODE */
 
 .seventies #game {
-    background-image: url('brushed_aluminum.jpg');
-    background-repeat: round;
-    border-style: outset;
-    border-color: grey;
+    background: linear-gradient(0, #1c1c1c, #313131);
+    border-color: #1c1c1c;
+    border-style: solid;
 }
 
 .seventies #puzzle.grid > div {
@@ -424,14 +424,14 @@ body.calculator {
 
 .seventies #puzzle .cell {
     background: linear-gradient(135deg, #72c3ff, #454bff);
-    border: 8px outset #5678cc;
-    border-radius: 30px;
+    border: 8px outset #72c3ff;
+    border-radius: 10px;
     font-size: 2.5vw;
 }
 
 .seventies #puzzle .cell:hover {
     background: linear-gradient(135deg, #61b2ee, #343aee);
-    border-color: #4567bb;
+    border-color: #61b2ee;
 }
 
 .seventies #puzzle .operator {
