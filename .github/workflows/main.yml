@@ -36,7 +36,7 @@ jobs:
       run: npm install
 
     - name: Run all tests and ensure 100% coverage
-      run: npm run coverage
+      run: npm run cd-coverage
 
     - name: Clean up working directory
       run: rm -rf node_modules .github .idea .nyc_output resource .gitignore package*.json *.test.js
