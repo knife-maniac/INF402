@@ -10,9 +10,7 @@
   },
   "scripts": {
     "test": "mocha *.test.js --reporter mochawesome",
-    "coverage": "nyc --check-coverage --reporter=html npm test",
-    "cd-test": "mocha unit.test.js integration.test.js --reporter mochawesome",
-    "cd-coverage": "nyc --check-coverage --reporter=html npm run cd-test"
+    "coverage": "nyc --check-coverage --reporter=html npm test"
   },
   "nyc": {
     "branches": 100,
