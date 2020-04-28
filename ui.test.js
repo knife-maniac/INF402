@@ -7,7 +7,7 @@ describe('user interface tests', function() {
 
     before(async function() {
         this.timeout(TIMEOUT);
-        browser = await puppeteer.launch({headless:true,slowMo:200});
+        browser = await puppeteer.launch({headless:false,slowMo:200});
     });
 
     it('must load page and display it', async function() {
