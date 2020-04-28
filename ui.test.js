@@ -13,7 +13,7 @@ describe('user interface tests', function() {
     it('must load page and display it', async function() {
         this.timeout(TIMEOUT);
         page = (await browser.pages())[0];
-        await page.goto(`file:///${__dirname}/index.html`);
+        await page.goto('http://ruben-quast.fr/uga/inf402');
         await page.waitForFunction('!X.is_busy');
     });
 
