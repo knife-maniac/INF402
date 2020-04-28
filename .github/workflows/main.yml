@@ -36,7 +36,7 @@ jobs:
       run: npm install
 
     - name: Install missing libgbm.so
-      run: sudo apt-get install -y libgbm
+      run: sudo apt-get install -y libgbm-dev
 
     - name: Run all tests and ensure 100% coverage
       run: npm run coverage
