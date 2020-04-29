@@ -23,5 +23,10 @@ describe('unit tests', function() {
         });
     });
 
-    //TODO : Unit tests for rpl2fnc, fnc2dimacs, dimacs2pretty, run
+    //TODO add missing unit tests
+    describe('TODO', function() {
+        it('rpl2fnc()');
+        it('fnc2dimacs()');
+        it('dimacs2pretty()');
+    });
 });
