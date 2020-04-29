@@ -55,39 +55,47 @@ describe('integration tests', function() {
     }
 
 
-    const INTEGRATION_TESTS = [
-        ['no value no \\n', '',true],
-        ['no value with \\n', '\n',true],
-        ['one value', 'A1\n',true],
-        ['three values', 'A1\nB2\nD4\n',true],
-        ['three values + one inferior sign', 'A1\nB2\nD4\nK<O\n',true],
-        ['three values + one superior sign', 'A1\nB2\nD4\nK>O\n',true],
-
-        ['two impossible values same square', 'A1\nA2\n',false],
-        ['two impossible values same line adjacent', 'A1\nB1\n',false],
-        ['two impossible values same line extremes', 'A2\nD2\n',false],
-        ['two impossible values same column', 'A4\nM4\n',false]
+    const SUCCESS = [
+        ['no value no \\n', ''],
+        ['no value with \\n', '\n'],
+        ['one value', 'A1\n'],
+        ['three values', 'A1\nB2\nD4\n'],
+        ['three values + one inferior sign', 'A1\nB2\nD4\nK<O\n'],
+        ['three values + one superior sign', 'A1\nB2\nD4\nK>O\n']
     ];
 
+    const FAILURE = [
+        ['two impossible values same square', 'A1\nA2\n'],
+        ['two impossible values same line adjacent', 'A1\nB1\n'],
+        ['two impossible values same line extremes', 'A2\nD2\n'],
+        ['two impossible values same column', 'A4\nM4\n']
+    ];
 
-    INTEGRATION_TESTS.map(function([name,rpl,has_solution]) {
-        it(`must ${has_solution ? 'succeed':'fail'} with ${name}`, function() {
-            let success = false;
-            let puzzle;
-            try {
-                puzzle = futoshiki.run(rpl);
-                if (puzzle.solution_as_array.length) {
-                    if (solution_is_valid(puzzle.solution_as_array) && solution_respects_constraints(puzzle.solution_as_array,rpl)) {
-                        success = true;
+    function test_suite(tests,has_solution) {
+        tests.map(function([name,rpl]) {
+            it(name, function() {
+                let success = false;
+                let puzzle;
+                try {
+                    puzzle = futoshiki.run(rpl);
+                    if (puzzle.solution_as_array.length) {
+                        if (solution_is_valid(puzzle.solution_as_array) && solution_respects_constraints(puzzle.solution_as_array,rpl)) {
+                            success = true;
+                        }
+                    } else {
+                        success = !has_solution;
                     }
-                } else {
-                    success = !has_solution;
+                } catch (e) {
                 }
-            } catch (e) {
-                console.log(e);
-
-            }
-            assert(success);
+                assert(success);
+            });
         });
-    });
+    }
+
+    describe('must succeed with ...',function() {
+        test_suite(SUCCESS, true);
+    })
+    describe('must fail with ...',function() {
+        test_suite(FAILURE, false);
+    })
 });
