@@ -16,12 +16,12 @@
 
 ### Dossiers
 
-- **style** contient le fichier  style.css ainsi que les images et les polices d'écriture utilisées.
+- **style** contient le fichier  style.css ainsi que les images et les polices d'écriture utilisées
 
-- **lib** contient MiniSat (le SAT-solveur utilisé) ainsi que jQuery.
+- **lib** contient MiniSat (le SAT-solveur utilisé) ainsi que jQuery
 
-- **mochawesome-report** contient le résultat des tests automatiques.
+- **mochawesome-report** contient le résultat des tests automatiques
 
-- **coverage** contient le rapport de couverture.
+- **coverage** contient le rapport de couverture
 
-- **.github/workflows** contient main.yml, qui est le pipeline de déploiement continu.
+- **.github/workflows** contient main.yml, qui est le pipeline de déploiement continu
