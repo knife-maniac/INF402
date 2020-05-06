@@ -1,27 +1,28 @@
 # Futoshiki
 
-### Fichiers principaux
+### Fichiers produits
 
-- **futoshiki.js** contient les fonctions principales 
+- **futoshiki.js** contient le cœur de l'application (JavaScript)
 
-- **index.html**
+- **index.html** contient la structure et le code de l'interface web (HTML et JavaScript) 
 
-### Fichiers de test
+- **style/style.css** contient les règles de pésentation de l'interface web (CSS)
 
-- **unit.test.js** contient les tests unitaires
+- **{unit,integration,ui}.test.js** contiennent respectivement les tests unitaires, les tests d'intégration et les tests d'interface utilisateur
 
-- **integration.test.js** contient les tests d'intégration
+- **.github/workflows/main.yml** contient le pipeline de déploiement continu GitHub
 
-- **ui.test.js** contient les tests d'interface utilisateur
+- **package.json** contient les dépendances, les scripts utilisés pour le déploiement continu et les seuils d'alerte des tests de couverture
 
-### Dossiers
+### Fichiers récupérés sur internet
 
-- **style** contient le fichier  style.css ainsi que les images et les polices d'écriture utilisées
+- **lib/** contient MiniSat (le SAT-solveur utilisé) ainsi que jQuery (une bibliothèque JavaScript facilitant la manipulation du DOM)
 
-- **lib** contient MiniSat (le SAT-solveur utilisé) ainsi que jQuery
+- **style/** contient les images et les polices de caractères utilisées
 
-- **mochawesome-report** contient le résultat des tests automatiques
+### Fichiers générés automatiquement
+
+- **mochawesome-report** contient le rapport des tests automatiques
 
 - **coverage** contient le rapport de couverture
 
-- **.github/workflows** contient main.yml, qui est le pipeline de déploiement continu
