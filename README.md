@@ -2,28 +2,26 @@
 
 ### Fichiers principaux
 
-- Les fonctions principales se trouvent dans le fichier futoshiki.js
+- **futoshiki.js** contient les fonctions principales 
 
-- index.html
-
-- package.json
+- **index.html**
 
 ### Fichiers de test
 
-- unit.test.js (unit tests)
+- **unit.test.js** contient les tests unitaires
 
-- integration.test.js (integration tests)
+- **integration.test.js** contient les tests d'intégration
 
-- ui.test.js (user interface tests)
+- **ui.test.js** contient les tests d'interface utilisateur
 
 ### Dossiers
 
-- *style* contient le fichier  style.css ainsi que les images et les polices d'écriture utilisées.
+- **style** contient le fichier  style.css ainsi que les images et les polices d'écriture utilisées.
 
-- *lib* contient MiniSat (le SAT-solveur utilisé) ainsi que jQuery.
+- **lib** contient MiniSat (le SAT-solveur utilisé) ainsi que jQuery.
 
-- *mochawesome-report* contient le résultat des tests automatiques.
+- **mochawesome-report** contient le résultat des tests automatiques.
 
-- *coverage* contient le rapport de couverture.
+- **coverage** contient le rapport de couverture.
 
-- *.github/workflows* contient main.yml, qui est le pipeline de déploiement continu.
+- **.github/workflows** contient main.yml, qui est le pipeline de déploiement continu.
